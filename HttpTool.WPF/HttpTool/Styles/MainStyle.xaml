@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="MyLabel" TargetType="TextBlock">
+        <!--<Setter Property="FontFamily" Value="/Rover;component/Resources/#Northwood High"></Setter>-->
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="Padding" Value="4"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="FontWeight" Value="Light"></Setter>
+        <Setter Property="Foreground" Value="#fff"></Setter>
+        <Setter Property="FontSize" Value="60"></Setter>
+    </Style>
+</ResourceDictionary>

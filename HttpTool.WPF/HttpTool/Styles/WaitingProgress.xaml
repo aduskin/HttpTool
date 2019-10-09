@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="HttpTool.Styles.WaitingProgress"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             Visibility="Collapsed"
+             mc:Ignorable="d"  Background="Transparent"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Storyboard x:Key="waiting" Name="waiting">
+            <DoubleAnimation Storyboard.TargetName="SpinnerRotate" Storyboard.TargetProperty="(RotateTransform.Angle)" From="0" To="359" Duration="0:0:02" RepeatBehavior="Forever" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Image x:Name="loading"  HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Source="/HttpTool;component/Images/Load.png" Width="120" Height="120">
+        <Image.Effect>
+            <DropShadowEffect BlurRadius="20" Opacity="0.2" ShadowDepth="0" Color="#000"/>
+        </Image.Effect>
+        <Image.RenderTransform>
+            <RotateTransform x:Name="SpinnerRotate" Angle="0" />
+        </Image.RenderTransform>
+    </Image>
+</UserControl>

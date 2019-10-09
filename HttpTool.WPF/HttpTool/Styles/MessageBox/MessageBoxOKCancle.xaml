@@ -1,0 +1,73 @@
+﻿<Window x:Class="HttpTool.Styles.MessageBox.MessageBoxOKCancle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Metro="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin"
+        xmlns:local="clr-namespace:HttpTool.Styles.MessageBox"
+        mc:Ignorable="d"
+          Title="提示" Height="200" Width="380" Background="#fff" AllowsTransparency="True" WindowStyle="None" BorderThickness="20" Icon="../../Images/Logo.png" MouseLeftButtonDown="Window_MouseLeftButtonDown"  WindowStartupLocation="CenterScreen" >
+    <Window.Effect>
+        <DropShadowEffect BlurRadius="20" Opacity="0.1" ShadowDepth="0"/>
+    </Window.Effect>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/Style.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/NorTheme.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/SIcon.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!--<Storyboard x:Key="LoadStoryboard">
+                <DoubleAnimation
+                Storyboard.TargetName="window"
+                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                From="0.7"
+                To="1"
+                Duration="0:0:0.2" />
+                <DoubleAnimation
+                Storyboard.TargetName="window"
+                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                From="0.7"
+                To="1"
+                Duration="0:0:0.2" />
+                <DoubleAnimation
+                Storyboard.TargetName="window"
+                Storyboard.TargetProperty="(UIElement.Opacity)"
+                From="0"
+                To="1"
+                Duration="0:0:0.2" />
+            </Storyboard>-->
+        </ResourceDictionary>
+    </Window.Resources>
+    <!--<Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource LoadStoryboard}" />
+        </EventTrigger>
+    </Window.Triggers>-->
+    <Border x:Name="window" RenderTransformOrigin="0.5,0.5" Background="#96ffffff" BorderBrush="{StaticResource NorHoverFGBursh2}" BorderThickness="0,3,0,0">
+        <Border.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform />
+                <SkewTransform />
+                <RotateTransform />
+                <TranslateTransform />
+            </TransformGroup>
+        </Border.RenderTransform>
+        <Grid>
+            <Border BorderBrush="#10000000" BorderThickness="0,0,0,1" Height="42" VerticalAlignment="Top">
+                <Grid>
+                    <TextBlock Name="Title" HorizontalAlignment="Left"  FontFamily="{StaticResource Font-ardestine}" Foreground="#fff" Effect="{StaticResource TextShadow-Black}" TextAlignment="Center" TextBlock.FontSize="20" Margin="20,10" TextWrapping="Wrap" Text="AduSkin"  />
+                    <Metro:AduButtonIcon VerticalAlignment="Top" Icon="{StaticResource Icon_ZhiFuBao_Close}" Width="40" Height="40" FontSize="14" Foreground="{StaticResource NorSelectFGBursh2}" HorizontalAlignment="Right"   Background="Transparent" BorderThickness="0" Click="btnClose_Click"/>
+                </Grid>
+            </Border>
+            <Border Margin="20,10,20,0" Height="70">
+                <TextBlock Name="message" Foreground="#fff" Effect="{StaticResource TextShadow-Black}"  HorizontalAlignment="Left" TextAlignment="Center" TextBlock.FontSize="12" FontWeight="Light"    TextWrapping="Wrap" Text="Message" VerticalAlignment="Center" />
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,0,5,10">
+                <Button Content="确定" Style="{StaticResource OKButton}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Margin="5,0" Click="Confirm_Click"/>
+                <Button Content="取消" Style="{StaticResource NorButtonBorderCancel}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Margin="5,0" Click="Cancle_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</Window>

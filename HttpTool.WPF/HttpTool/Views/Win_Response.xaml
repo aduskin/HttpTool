@@ -1,0 +1,121 @@
+﻿<Adu:AduWindow x:Class="HttpTool.Views.Win_Response"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Adu="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:i1="clr-namespace:HttpTool.API"
+               xmlns:viewmodel="clr-namespace:HttpTool.ViewModels"
+        xmlns:local="clr-namespace:HttpTool.Views"
+               MinHeight="380"
+                BorderBrush="#999"
+               MinWidth="380"
+        mc:Ignorable="d"
+                Icon="../httptool.ico"
+        ResizeMode="CanResizeWithGrip"
+        Name="WinResponse"
+        Title="{Binding ReturnTitle}" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/SIcon.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+         <!--成功-->
+         <Geometry x:Key="Icon_Succes">M512 64C262.4 64 64 262.4 64 512s198.4 448 448 448 448-198.4 448-448S761.6 64 512 64z m0 838.4c-217.6 0-390.4-172.8-390.4-390.4S294.4 121.6 512 121.6 902.4 294.4 902.4 512 729.6 902.4 512 902.4z M697.6 633.6c-6.4 0-70.4 83.2-179.2 83.2-102.4 0-134.4-64-160-83.2-12.8 0-19.2 6.4-25.6 6.4-19.2 19.2-12.8 38.4-12.8 38.4 12.8 25.6 76.8 96 198.4 96s211.2-96 211.2-96c0-6.4 6.4-19.2-6.4-32s-25.6-12.8-25.6-12.8zM332.8 422.4a0.8 0.8 0 1 0 102.4 0 0.8 0.8 0 1 0-102.4 0zM614.4 422.4a0.8 0.8 0 1 0 102.4 0 0.8 0.8 0 1 0-102.4 0z</Geometry>
+         <!--失败-->
+         <Geometry x:Key="Icon_Error">M512 1024C230.4 1024 0 793.6 0 512S230.4 0 512 0s512 230.4 512 512-230.4 512-512 512zM332.8 450.56c30.72 0 51.2-20.48 51.2-51.2s-20.48-51.2-51.2-51.2-51.2 20.48-51.2 51.2c0 25.6 20.48 46.08 51.2 51.2z m358.4 0c30.72 0 51.2-20.48 51.2-51.2s-20.48-51.2-51.2-51.2-51.2 20.48-51.2 51.2c0 25.6 20.48 46.08 51.2 51.2z m-394.24 235.52c-10.24 20.48-5.12 40.96 15.36 51.2 20.48 10.24 40.96 5.12 51.2-15.36 30.72-56.32 81.92-81.92 148.48-81.92 66.56 0 112.64 25.6 148.48 81.92 10.24 20.48 35.84 25.6 51.2 15.36 20.48-10.24 25.6-35.84 15.36-51.2-51.2-81.92-122.88-122.88-215.04-122.88-92.16 0-163.84 40.96-215.04 122.88z</Geometry>
+      </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewmodel:Win_ResponseViewModel/>
+    </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i1:ExInvokeCommandAction Command="{Binding AduMain_LoadCommand}" CommandParameter="{Binding ElementName=WinResponse}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i1:ExInvokeCommandAction Command="{Binding AduMain_MouseLeftButtonDownCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Background>
+        <ImageBrush ImageSource="../Images/Background/Nor2.jpg" Stretch="UniformToFill" />
+        <!--<SolidColorBrush>#F5F5F5</SolidColorBrush>-->
+    </Window.Background>
+   <Border Padding="10" Background="#40000000">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition MinHeight="30" MaxHeight="500" Height="3*"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="7*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Adu:AduButtonSvg Icon="{DynamicResource Icon_Succes}" VerticalAlignment="Center" IconHeight="24" IconWidth="24" Foreground="#fff"></Adu:AduButtonSvg>
+                <TextBlock Text="{Binding ReturnTitle}" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#fff"></TextBlock>
+            </StackPanel>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <TextBlock Text="Server" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Margin="10,5" FontSize="14"  Foreground="#fff"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" >
+                <TextBox Text="{Binding Server}" Foreground="#fff" Background="Transparent" FontWeight="Bold" BorderThickness="0" VerticalAlignment="Center" IsReadOnly="True"></TextBox>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <TextBlock Text="IP" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5" FontWeight="Bold" FontSize="14"  Foreground="#fff"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" >
+                <TextBox Text="{Binding IP}" Foreground="#fff" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" FontWeight="Bold" IsReadOnly="True"></TextBox>
+            </Grid>
+            <Grid Grid.Row="3" Grid.Column="0">
+                <TextBlock Text="DNS" HorizontalAlignment="Right"  Margin="10,5" FontSize="14"  Foreground="#fff" FontWeight="Bold"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="3" Grid.Column="1" Margin="10,0,0,0" >
+                <TextBox Text="{Binding DNS}" Foreground="#fff" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" IsReadOnly="True" FontWeight="Bold"></TextBox>
+            </Grid>
+            <Grid Grid.Row="4" Grid.Column="0">
+                <Adu:AduButtonIcon Content="AbsoluteUri" Width="120" Icon="{StaticResource Icon_URL}" IconWidth="20" IconHeight="20" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#fff" Command="{Binding ToUrl}"></Adu:AduButtonIcon>
+                <!--<TextBlock Text="AbsoluteUri" HorizontalAlignment="Right" Margin="0,5" FontSize="14"  Foreground="#fff" FontWeight="Bold"></TextBlock>-->
+            </Grid>
+            <Grid Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" >
+                <TextBox Text="{Binding AUrl}" Foreground="#fff" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" FontWeight="Bold" IsReadOnly="True"></TextBox>
+            </Grid>
+            <Grid Grid.Row="5" Grid.Column="0">
+            <Adu:AduButtonIcon Content="Header" IconWidth="0" IconHeight="18" Width="60" Margin="0" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#fff" Command="{Binding ToHeader}"></Adu:AduButtonIcon>
+                <!--<TextBlock Text="Header" HorizontalAlignment="Right" Margin="0,5" FontSize="14"  Foreground="#fff" FontWeight="Bold"></TextBlock>-->
+            </Grid>
+            <Border Grid.Row="5" Grid.Column="1" Margin="10,0,0,0" BorderBrush="#10000000" BorderThickness="1">
+                <Adu:MetroScrollViewer HorizontalScrollBarVisibility="Disabled">
+                    <TextBox BorderThickness="0" Foreground="#fff" TextWrapping="WrapWithOverflow" Background="#40ffffff" IsReadOnly="True" AcceptsReturn="True" Text="{Binding Header}"/>
+            </Adu:MetroScrollViewer>
+            </Border>
+            <Grid Grid.Row="6" Grid.Column="0">
+                <TextBlock Text="Cookie" FontWeight="Bold" HorizontalAlignment="Right" Margin="10,5" FontSize="14"  Foreground="#fff"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="6" Grid.Column="1" Margin="10,0,0,0" >
+
+            </Grid>
+            <StackPanel Grid.Row="7" Grid.Column="0">
+            <Adu:AduButtonIcon Content="Html" FontWeight="Bold" Width="76" Icon="{StaticResource Icon_HTML}"  IconWidth="20" IconHeight="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#fff" Command="{Binding OpenHtmlToBrowser}"></Adu:AduButtonIcon>
+                <!--<Adu:AduButtonTransparent MinWidth="40" MinHeight="20"  HorizontalAlignment="Right" FontWeight="Bold" Margin="0,5" FontSize="14"  Foreground="#fff" Command="{Binding OpenHtmlToBrowser}">-->
+                <TextBlock Text="{Binding HtmlText}" Visibility="Collapsed" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,5" FontSize="14"  Foreground="#fff"></TextBlock>
+                <!--</Adu:AduButtonTransparent>-->
+                <Adu:AduButtonSvg Icon="{StaticResource Icon_Down}" Visibility="Collapsed" HorizontalAlignment="Right" Foreground="#444"></Adu:AduButtonSvg>
+                <Adu:AduButtonSvg Icon="{StaticResource Icon_Dynamic}" Visibility="Collapsed" HorizontalAlignment="Right" Foreground="#444"></Adu:AduButtonSvg>
+            </StackPanel>
+            <Border Grid.Row="7" Grid.Column="1" Margin="10,0,0,0"  BorderBrush="#10000000" BorderThickness="1">
+                <Adu:MetroScrollViewer HorizontalScrollBarVisibility="Disabled">
+                    <TextBox BorderThickness="0" Foreground="#fff" TextWrapping="WrapWithOverflow" Background="#40ffffff" IsReadOnly="True" AcceptsReturn="True" Text="{Binding RequestContent}"/>
+                </Adu:MetroScrollViewer>
+            </Border>
+            
+        </Grid>
+    </Border>
+</Adu:AduWindow>
