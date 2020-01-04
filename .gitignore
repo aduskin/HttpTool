@@ -1,0 +1,7 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/HttpTool.WPF/HttpTool/obj/Debug
+/HttpTool.WPF/HttpTool/bin/Debug
+/HttpTool.WPF/.vs/HttpTool

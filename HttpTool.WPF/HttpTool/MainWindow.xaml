@@ -6,20 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:i1="clr-namespace:HttpTool.API"
+     xmlns:AduOpenLink="clr-namespace:AduSkin.Interactivity;assembly=AduSkin"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:HttpTool.ViewModels"
-    Name="MainWin"
-    WindowStyle="None"
-    Title="HttpTool"
-    Width="500"
-    MinWidth="440"
-   BorderBrush="#999"
-   Background="#fff"
-    Height="600"
-    MinHeight="400"
-    Icon="httptool.ico"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    Name="MainWin" WindowStyle="None" Title="HttpTool" Width="500" MinWidth="440"
+    BorderBrush="#999" Background="#fff" Height="600" MinHeight="400"
+    Icon="httptool.ico" WindowStartupLocation="CenterScreen" mc:Ignorable="d">
     <Window.DataContext>
         <viewmodels:MainWindowViewModel />
     </Window.DataContext>
@@ -50,16 +42,16 @@
         </Grid.Background>
         <Grid Background="#40000000">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
+                <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" >
+            <Grid Grid.Row="0" WindowChrome.IsHitTestVisibleInChrome="True">
                 <StackPanel Orientation="Horizontal" Margin="10,0" HorizontalAlignment="Left">
-                    <Adu:AduButtonSvg Icon="{StaticResource Icon_Tool}" IconHeight="20"  ToolTip="点击进入官网" IconWidth="20" Command="{Binding ToAduSkinWeb}"></Adu:AduButtonSvg>
+                    <Adu:AduButtonSvg Icon="{StaticResource Icon_Tool}" IconHeight="20"  ToolTip="点击进入官网" IconWidth="20" Command="AduOpenLink:ControlCommands.OpenLink" CommandParameter="https://github.com/aduskin"/>
                     <TextBlock Text="HttpTool" VerticalAlignment="Center" FontSize="14"  FontWeight="Bold" Foreground="#fff"></TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,120,0">
-                    <Adu:AduButtonTransparent Icon="{StaticResource Icon_Succes}" IconHeight="20" Foreground="#fff" ToolTip="设置" MinWidth="40" IconWidth="20" Command="{Binding OpenSetting}"></Adu:AduButtonTransparent>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,140,0" VerticalAlignment="Center">
+                    <Adu:AduButtonIcon Icon="{StaticResource Icon_Succes}" CornerRadius="3" IconHeight="20" Foreground="#fff" ToolTip="设置" MinWidth="40" IconWidth="20" Command="{Binding OpenSetting}"></Adu:AduButtonIcon>
                 </StackPanel>
             </Grid>
             <Grid
@@ -74,23 +66,11 @@
                         <RowDefinition MinHeight="100" />
                     </Grid.RowDefinitions>
                     <!--  请求地址  -->
-                    <Border
-                            Grid.Row="0"
-                            Height="38"
-                            Margin="8,0"
-                   Name="borderRequestBack"
-                            BorderBrush="#10000000"
-                  BorderThickness="1"
-                  Background="Transparent"
-                            CornerRadius="18">
+                    <Border Grid.Row="0" Height="38"
+                            Margin="8,0" Name="borderRequestBack" BorderBrush="#10000000"
+                            BorderThickness="1" Background="Transparent" CornerRadius="18">
                         <Grid>
-                            <ProgressBar
-                        Style="{StaticResource AduProgressBar}"
-                            Foreground="#444"
-                           Height="36"
-                            Background="#30ffffff"
-                            Value="{Binding ProgressBarValue}"
-                            Maximum="{Binding ProgressBarMaxNum}" />
+                            <ProgressBar Style="{StaticResource AduProgressBar}" Foreground="#444" Height="36" Background="#30ffffff" Value="{Binding ProgressBarValue}" Maximum="{Binding ProgressBarMaxNum}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80" />
@@ -98,32 +78,19 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="40" />
                                 </Grid.ColumnDefinitions>
-
-                                <ComboBox
-                                    IsReadOnly="True"
-                                    Grid.Column="0"
-                                    Margin="16,0,0,0"
-                            FontSize="12"
-                            Foreground="#666"
-                            FontWeight="Bold"
-                                    DisplayMemberPath="CodeName"
-                                    ItemsSource="{Binding HttpTypList}"
-                                    SelectedIndex="0"
-                                    SelectedItem="{Binding CurrentHttpType}"
-                                    SelectedValuePath="CodeValue"
-                                    Style="{StaticResource ComboBoxStyle}" />
-                                <ComboBox
-                                    IsReadOnly="True"
-                                    Grid.Column="1"
-                            FontWeight="Bold"
-                            FontSize="12"
-                            Foreground="#666"
-                                    DisplayMemberPath="CodeName"
-                                    ItemsSource="{Binding CodeTypeList}"
-                                    SelectedIndex="0"
-                                    SelectedItem="{Binding CurrentCodeType}"
-                                    SelectedValuePath="CodeValue"
-                                    Style="{StaticResource ComboBoxStyle}" />
+                                <Adu:AduComboBox
+                                    IsReadOnly="True" Grid.Column="0" Margin="16,0,0,0" FontSize="12" Foreground="#FFF" FontWeight="Bold" DisplayMemberPath="CodeName"
+                                    ItemsSource="{Binding HttpTypList}" SelectedIndex="0" SelectedItem="{Binding CurrentHttpType}" SelectedValuePath="CodeValue">
+                                    <Adu:AduComboBox.ToolTip>
+                                        <Adu:AduToolTip Content="请求方式"  PlacementEx="BottomCenter"/>
+                                    </Adu:AduComboBox.ToolTip>
+                                </Adu:AduComboBox>
+                                <Adu:AduComboBox IsReadOnly="True" Grid.Column="1" FontWeight="Bold" FontSize="12" Foreground="#FFF"
+                                    DisplayMemberPath="CodeName" ItemsSource="{Binding CodeTypeList}" SelectedIndex="0" SelectedItem="{Binding CurrentCodeType}" SelectedValuePath="CodeValue" >
+                                    <Adu:AduComboBox.ToolTip>
+                                        <Adu:AduToolTip Content="编码类型" PlacementEx="BottomCenter"/>
+                                    </Adu:AduComboBox.ToolTip>
+                                </Adu:AduComboBox>
                                 <TextBox Name="txtUrl" Grid.Column="2" Text="{Binding ToUrlTxt,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Transparent" BorderThickness="0"  FontSize="14"
                                     FontWeight="Bold" Foreground="#888" Background="Transparent" VerticalContentAlignment="Center" >
                                     <i:Interaction.Triggers>
@@ -135,86 +102,44 @@
                                         <KeyBinding Command="{Binding ToUrlCommand}" Key="Enter"></KeyBinding>
                                     </TextBox.InputBindings>
                                 </TextBox>
-                                <Popup  PopupAnimation="Fade" 
-                                       Width="460" Height="250" 
-                                       PlacementTarget="{Binding ElementName=txtUrl}" 
-                                       Placement="Bottom" AllowsTransparency="True" 
-                                       StaysOpen="False" IsOpen="{Binding isOpenSearchList}" HorizontalOffset="-20" VerticalOffset="1">
+                                <Popup  PopupAnimation="Fade"  Width="460" Height="250" PlacementTarget="{Binding ElementName=txtUrl}" 
+                                       Placement="Bottom" AllowsTransparency="True"   StaysOpen="False" IsOpen="{Binding isOpenSearchList}" HorizontalOffset="-20" VerticalOffset="1">
                                     <Border Background="#fff" Margin="20,0,20,30">
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="20" Opacity="0.4" Direction="270" ShadowDepth="10" Color="Black"/>
                                         </Border.Effect>
-                                        <DataGrid
-                                            BorderThickness="0"
-                                            Foreground="#000"
-                                            HeadersVisibility="None"
-                                            GridLinesVisibility="None"
-                                            ItemsSource="{Binding RequestHistory}"
-                                            SelectedItem="{Binding CurrentRequestHistory}"
-                                            VerticalScrollBarVisibility="Disabled">
+                                        <DataGrid BorderThickness="0" Foreground="#000" HeadersVisibility="None" GridLinesVisibility="None"  ItemsSource="{Binding RequestHistory}" SelectedItem="{Binding CurrentRequestHistory}" VerticalScrollBarVisibility="Disabled">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Width="*" Foreground="#666"  Binding="{Binding url}" />
                                                 <DataGridTemplateColumn Width="50" >
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <Adu:AduButtonIcon
-                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.RemoveRequestHistory}"
-                                            CommandParameter="{Binding}"
-                                                        Width="30"
-                                                        Margin="6,0"
-                                                        HorizontalAlignment="Left"
-                                                        Foreground="#666"
-                                                        Icon="{StaticResource Icon_Delete}" />
+                                                            <Adu:AduButtonIcon Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.RemoveRequestHistory}"
+                                                                CommandParameter="{Binding}" Width="30" Margin="6,0" HorizontalAlignment="Left" Foreground="#666" Icon="{StaticResource Icon_Delete}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <!--<TextBlock Text="搜索内容" Foreground="#000" FontSize="30" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>-->
                                     </Border>
                                 </Popup>
-                                <Adu:AduButtonSvg
-                                    Grid.Column="3"
-                                    Width="30"
-                           HorizontalAlignment="Left"
-                           Name="btnRequest"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Command="{Binding ToUrlCommand}"
-                           CommandParameter="{Binding ElementName=borderRequestBack}"
-                                    Foreground="#999"
-                                    Icon="{StaticResource Icon_To}"
-                                    IconHeight="16"
-                                    IconWidth="12" />
+                                <Adu:AduButtonSvg Grid.Column="3"
+                                    Width="30" HorizontalAlignment="Left" Name="btnRequest"
+                                    Background="Transparent" BorderThickness="0" Command="{Binding ToUrlCommand}"
+                                    CommandParameter="{Binding ElementName=borderRequestBack}" Foreground="#999"
+                                    Icon="{StaticResource Icon_To}" IconHeight="16" IconWidth="12" />
                             </Grid>
                         </Grid>
-
                     </Border>
                     <Border  Grid.Row="1" BorderBrush="#fff" BorderThickness="3,0,0,0">
                         <Grid>
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-                                <Adu:AduButtonIcon
-                                    Command="{Binding AddRequestParameterCommand}"
-                                    Content="请求参"
-                                    Foreground="#fff"
-                                 Width="80"
-                                IconWidth="20"
-                                IconHeight="22"
-                                    Icon="{StaticResource Icon_Insert}" />
-                                <Adu:AduButtonIcon
-                                Name="FileUpload"
-                                    Command="{Binding OpenFileUploadList}"
-                                    Content="上传列表"
-                           Width="90"
-                                    Foreground="#fff"
-                                Margin="10,0"
-                                IconHeight="22" IconWidth="18"
-                                    Icon="{StaticResource Icon_FileUpload}" />
-                                <Popup  PopupAnimation="Fade" 
-                                       Width="524" Height="262" 
-                                       PlacementTarget="{Binding ElementName=FileUpload}" 
-                                       Placement="Bottom" AllowsTransparency="True" 
-                                       StaysOpen="False" IsOpen="{Binding isAllowFileUpload}" HorizontalOffset="-20" VerticalOffset="1">
+                                <Adu:AduButtonIcon IconTextMargin="4"  CornerRadius="0,3,3,0" Command="{Binding AddRequestParameterCommand}"
+                                    Content="请求参" Foreground="#fff" Width="80" IconWidth="20" IconHeight="22" Icon="{StaticResource Icon_Insert}" />
+                                <Adu:AduButtonIcon CornerRadius="3" IconTextMargin="4" Name="FileUpload" Command="{Binding OpenFileUploadList}"
+                                    Content="上传列表" Width="90" Foreground="#fff" Margin="10,0" IconHeight="22" IconWidth="18" Icon="{StaticResource Icon_FileUpload}" />
+                                <Popup  PopupAnimation="Fade" Width="524" Height="262" PlacementTarget="{Binding ElementName=FileUpload}" 
+                                       Placement="Bottom" AllowsTransparency="True" StaysOpen="False" IsOpen="{Binding isAllowFileUpload}" HorizontalOffset="-20" VerticalOffset="1">
                                     <Border Background="#fff" Margin="20,0,20,30" Padding="2">
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="20" Opacity="0.4" Direction="270" ShadowDepth="10" Color="Black"/>
@@ -223,33 +148,22 @@
                                     </Border>
                                 </Popup>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0">
-                                    <!--<TextBlock Text="准备文件上传" VerticalAlignment="Center" FontSize="14"></TextBlock>-->
                                     <Adu:AduUpload  Width="170" Height="30" Foreground="#fff" BorderThickness="2" MultiSelect="True" FileAduUpload="AduUpload_FileAduUpload">
                                     </Adu:AduUpload>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel  HorizontalAlignment="Right">
-                                <Adu:MetroSwitch
-                                    x:Name="ts"
-                                    Margin="10"
-                            IsChecked="{Binding IsOpenParameterText}"
-                            Command="{Binding ChangeParameter}"
-                                    CornerRadius="100" />
+                                <Adu:MetroSwitch  x:Name="ts" Margin="10" IsChecked="{Binding IsOpenParameterText}" Command="{Binding ChangeParameter}" CornerRadius="100">
+                                    <Adu:MetroSwitch.ToolTip>
+                                        <Adu:AduToolTip Content="手动输入请求参数"  PlacementEx="BottomLeft"/>
+                                    </Adu:MetroSwitch.ToolTip>
+                                </Adu:MetroSwitch>
                             </StackPanel>
                         </Grid>
                     </Border>
                     <Grid Grid.Row="2" Background="#10000000">
-                        <DataGrid
-                       CanUserResizeColumns="False"
-                       CanUserSortColumns="False"
-                                IsEnabled="{Binding RequestParamState}"
-                                Grid.Row="1"
-                        Visibility="{Binding RequestParameterVisibility}"
-                                BorderThickness="0"
-                                GridLinesVisibility="None"
-                                ItemsSource="{Binding RequestParameter}"
-                                SelectedItem="{Binding CurrentRequestParameter}"
-                                VerticalScrollBarVisibility="Disabled">
+                        <DataGrid CanUserResizeColumns="False" CanUserSortColumns="False" IsEnabled="{Binding RequestParamState}" Grid.Row="1"
+                            Visibility="{Binding RequestParameterVisibility}" BorderThickness="0" GridLinesVisibility="None" ItemsSource="{Binding RequestParameter}" SelectedItem="{Binding CurrentRequestParameter}" VerticalScrollBarVisibility="Disabled">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Drop">
                                     <i1:ExInvokeCommandAction Command="{Binding DropUploadFile}" />
@@ -259,17 +173,8 @@
                                 <DataGridTemplateColumn Width="6*" Header="参数名称">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox TabIndex="-1"
-                                                        Background="Transparent"
-                                                        BorderThickness="0,0,0,0"
-                                            Height="40"
-                                            VerticalContentAlignment="Center"
-                                                        FocusVisualStyle="{x:Null}"
-                                                    Margin="10,0"
-                                                        FontSize="14px"
-                                                        FontWeight="Bold"
-                                                        Foreground="#fff"
-                                                        Text="{Binding CodeName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBox TabIndex="-1" Background="Transparent" BorderThickness="0,0,0,0" Height="40" VerticalContentAlignment="Center"  FocusVisualStyle="{x:Null}"
+                                                    Margin="10,0" FontSize="14px" FontWeight="Bold"  Foreground="#fff" Text="{Binding CodeName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -283,7 +188,7 @@
                                 <DataGridTemplateColumn Width="60" Header="操作">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Adu:AduButtonIcon
+                                            <Adu:AduButtonIcon CornerRadius="3"
                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.RemoveParameter}"
                                             CommandParameter="{Binding}" Width="30" Margin="10,0" HorizontalAlignment="Left" Foreground="#fff" Icon="{StaticResource Icon_Delete}" />
                                         </DataTemplate>
@@ -298,14 +203,11 @@
                                         <i1:ExInvokeCommandAction Command="{Binding DropUploadFile}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                                <!--<TextBox.InputBindings>
-                                <KeyBinding Command="{Binding ToUrlCommand}" Key="Enter"></KeyBinding>
-                            </TextBox.InputBindings>-->
                             </TextBox>
                         </ScrollViewer>
                     </Grid>
                     <Border Grid.Row="3" BorderBrush="#fff" BorderThickness="3,0,0,0">
-                        <Adu:AduButtonIcon HorizontalAlignment="Left" VerticalAlignment="Center" Content="请求头" Width="80" IconWidth="20" IconHeight="22"  Command="{Binding AddRequestHeaderCommand}" Foreground="#fff" Icon="{StaticResource Icon_Insert}" />
+                        <Adu:AduButtonIcon  IconTextMargin="4" CornerRadius="0,3,3,0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="请求头" Width="80" IconWidth="20" IconHeight="22"  Command="{Binding AddRequestHeaderCommand}" Foreground="#fff" Icon="{StaticResource Icon_Insert}" />
                     </Border>
                     <Grid Grid.Row="4" Background="#10000000" >
                         <DataGrid
@@ -320,60 +222,31 @@
                                 <DataGridTemplateColumn Width="6*" Header="请求头">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox
-                                            Height="40"
-                                            VerticalContentAlignment="Center"
-                                                        Background="Transparent"
-                                                        BorderThickness="0,0,0,0"
-                                                        FocusVisualStyle="{x:Null}"
-                                                    Margin="10,0"
-                                                        FontSize="14px"
-                                                        FontWeight="Bold"
-                                                        Foreground="#fff"
-                                                        Text="{Binding CodeName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBox Height="40" VerticalContentAlignment="Center" Background="Transparent" BorderThickness="0,0,0,0"
+                                                        FocusVisualStyle="{x:Null}" Margin="10,0" FontSize="14px" FontWeight="Bold"
+                                                        Foreground="#fff"  Text="{Binding CodeName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Width="5*" Header="值" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox
-                                            Name="Tex"
-                                            Height="40"
-                                            VerticalContentAlignment="Center"
-                                                        Background="Transparent"
-                                                        BorderThickness="0,0,0,0"
-                                                        FocusVisualStyle="{x:Null}"
-                                                        FontSize="14px"
-                                                        FontWeight="Bold"
-                                                        Foreground="#fff"
-                                                        Text="{Binding CodeValue,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBox Name="Tex" Height="40" VerticalContentAlignment="Center" Background="Transparent" BorderThickness="0,0,0,0" FocusVisualStyle="{x:Null}" FontSize="14px"
+                                                        FontWeight="Bold" Foreground="#fff" Text="{Binding CodeValue,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Width="60" Header="操作">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Adu:AduButtonIcon
-                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.RemoveHeader}"
-                                            CommandParameter="{Binding}"
-                                                        Width="30"
-                                                    Margin="10,0"
-                                                        HorizontalAlignment="Left"
-                                                        Foreground="#fff"
-                                                        Icon="{StaticResource Icon_Delete}" />
+                                            <Adu:AduButtonIcon CornerRadius="3" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.RemoveHeader}"
+                                            CommandParameter="{Binding}" Width="30" Margin="10,0" HorizontalAlignment="Left" Foreground="#fff" Icon="{StaticResource Icon_Delete}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-
-                    <!--<Adu:MetroProgressBar
-                    Grid.Row="5"
-                            Background="#FF555C65"
-                            ProgressBarState="Wait" />-->
                 </Grid>
             </Grid>
         </Grid>

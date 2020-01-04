@@ -8,85 +8,43 @@
         xmlns:viewmodels="clr-namespace:HttpTool.ViewModels"
         xmlns:AduControls="clr-namespace:HttpTool.Scontrols"
          xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:i1="clr-namespace:HttpTool.API"
-                 BorderBrush="#999"
-        mc:Ignorable="d"
+        xmlns:i1="clr-namespace:HttpTool.API" BorderBrush="#999" mc:Ignorable="d"
          Title="设置" Height="300" Width="460" MinHeight="300" MinWidth="460" Name="MainWin" TitleForeground="#888" MouseLeftButtonDown="MainWin_MouseLeftButtonDown"  Icon="../httptool.ico"  WindowStartupLocation="CenterScreen">
-   <Window.DataContext>
-      <viewmodels:Win_SettingViewModel></viewmodels:Win_SettingViewModel>
-   </Window.DataContext>
-   <i:Interaction.Triggers>
-      <i:EventTrigger EventName="Loaded">
-         <i1:ExInvokeCommandAction CommandParameter="{Binding ElementName=MainWin}"  Command="{Binding AduMain_LoadCommand}"  />
-      </i:EventTrigger>
-   </i:Interaction.Triggers>
-   <Window.Resources>
-      <ResourceDictionary>
-         <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/Style.xaml"/>
-            <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/TabControlPage.xaml"/>
-            <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/SIcon.xaml"/>
-            <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/ScrollView.xaml"/>
-            <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/CompanyInfo.xaml"/>
-         </ResourceDictionary.MergedDictionaries>
-      </ResourceDictionary>
-   </Window.Resources>
-   <Grid Background="#10000000">
-      <Grid.RowDefinitions>
-         <!--<RowDefinition Height="40"></RowDefinition>-->
-         <RowDefinition Height="*"></RowDefinition>
-         <RowDefinition Height="2"></RowDefinition>
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-         <ColumnDefinition Width="200"></ColumnDefinition>
-         <ColumnDefinition Width="*"></ColumnDefinition>
-         <ColumnDefinition Width="200"></ColumnDefinition>
-      </Grid.ColumnDefinitions>
-      <!--<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-         <Image Source="{Binding CurrentSearchItem.entLogo}" Width="40" VerticalAlignment="Center" Height="40"></Image>
-         <TextBlock FontSize="20" FontWeight="Bold" TextTrimming="WordEllipsis" ToolTip="{Binding CurrentSearchItem.titleName}" MaxWidth="400" VerticalAlignment="Center" Foreground="#fff" Margin="10,0"  Text="{Binding CurrentSearchItem.titleName}"></TextBlock>
-         <TextBlock Style="{StaticResource LabText}" VerticalAlignment="Center" Text="{Binding CurrentSearchItem.legalPerson}"></TextBlock>
-      </StackPanel>-->
-      <!--<Grid Grid.Row="0" Grid.Column="2">
-         
-      </Grid>-->
-      <Grid  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" >
-         <Metro:AduTabControl>
-            <Metro:AduTabItem Header="常用设置" Height="44">
-               <Metro:MetroScrollViewer>
-                  <StackPanel Margin="20,40">
-                     <Metro:AnimationPath 
-                  Width="100"
-                  Height="100"
-                  VerticalAlignment="Center"
-                  Data="{StaticResource Icon_Tool}"
-                  Stretch="Uniform"
-                  Stroke="{DynamicResource PrimaryBrush}"
-                  StrokeThickness="6"
-                  Duration="0:0:6"
-                  ></Metro:AnimationPath>
-                     <!--<TextBlock Text="参数名称" Margin="10" Foreground="#fff"></TextBlock>
-                     <Metro:MetroTextBox InputHint="请输入参数名称" VerticalContentAlignment="Center" PopupHint="请输入参数名称"/>
-                     <TextBlock Text="参数值" Margin="10" Foreground="#fff"></TextBlock>
-                     <Metro:MetroTextBox InputHint="请输入参数值" VerticalContentAlignment="Center" PopupHint="请输入参数值"/>-->
-                     <TextBlock Text="清空历史" Margin="10" Foreground="#60000000" HorizontalAlignment="Center"></TextBlock>
-                     <Metro:MetroButton Content="{Binding CurrentValue}" MinHeight="34" MetroButtonState="Blue" Width="200"  Command="{Binding ClearFile}"></Metro:MetroButton>
-                     <!--<TextBlock Text="准备" Margin="10" Foreground="#fff"></TextBlock>
-                     <Metro:MetroButton Content="保 存" MinHeight="34" MetroButtonState="Blue"></Metro:MetroButton>-->
-                  </StackPanel>
-               </Metro:MetroScrollViewer>
-            </Metro:AduTabItem>
-            <Metro:AduTabItem Header="关于" Height="44">
-               <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,50">
-                  <TextBlock Foreground="#444"
-                                            FontSize="30"
-                                            FontWeight="Bold"
-                                            Text="AduSkin" />
-                  <TextBlock Foreground="#444" Text="追求极致，永臻完美" FontSize="12" TextAlignment="Center" />
-               </StackPanel>
-            </Metro:AduTabItem>
-         </Metro:AduTabControl>
-         
-      </Grid>
-   </Grid>
+    <Window.DataContext>
+        <viewmodels:Win_SettingViewModel></viewmodels:Win_SettingViewModel>
+    </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i1:ExInvokeCommandAction CommandParameter="{Binding ElementName=MainWin}"  Command="{Binding AduMain_LoadCommand}"  />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/Style.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/TabControlPage.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/SIcon.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/ScrollView.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HttpTool;component/Styles/CompanyInfo.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border>
+        <Border.Background>
+            <ImageBrush ImageSource="../Images/Background/Nor2.jpg" Stretch="UniformToFill" />
+        </Border.Background>
+        <Grid Background="#10000000" WindowChrome.IsHitTestVisibleInChrome="True">
+            <Metro:MetroScrollViewer>
+                <StackPanel Margin="20,40">
+                    <Metro:AnimationPath  Width="100" Height="100" VerticalAlignment="Center" Data="{StaticResource Icon_Tool}" Stretch="Uniform" Stroke="{DynamicResource PrimaryBrush}" StrokeThickness="6" Duration="0:0:6" />
+                    <TextBlock Text="清空历史" Margin="10" Foreground="#60000000" HorizontalAlignment="Center"></TextBlock>
+                    <Metro:AduFlatButton Content="{Binding CurrentValue}" MinHeight="34"  Width="200"  Command="{Binding ClearFile}"></Metro:AduFlatButton>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30">
+                        <TextBlock Foreground="#FFF" FontSize="30" FontWeight="Bold" Text="AduSkin" />
+                        <TextBlock Foreground="#FFF" Text="追求极致，永臻完美" FontSize="12" TextAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </Metro:MetroScrollViewer>
+        </Grid>
+    </Border>
 </Metro:AduWindow>
