@@ -4,4 +4,8 @@
 
 /HttpTool.WPF/HttpTool/obj/Debug
 /HttpTool.WPF/HttpTool/bin/Debug
-/HttpTool.WPF/.vs/HttpTool
+/HttpTool.WPF/.vs
+/HttpTool.WPF/HttpTool/bin/Release
+/HttpTool.WPF/HttpTool/obj/Release
+/.vs
+/HttpTool.WPF/packages
