@@ -196,7 +196,7 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Visibility="{Binding RequestParameterTextVisibility}" Style="{StaticResource For_Scrollviewer}">
+                        <Adu:MetroScrollViewer HorizontalScrollBarVisibility="Disabled" Visibility="{Binding RequestParameterTextVisibility}">
                             <TextBox BorderThickness="0" Foreground="#fff" AllowDrop="True" TextWrapping="WrapWithOverflow" Background="#40ffffff" Padding="10" FontSize="14" AcceptsReturn="True" Text="{Binding RequestParameterText}" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Drop">
@@ -204,7 +204,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
-                        </ScrollViewer>
+                        </Adu:MetroScrollViewer>
                     </Grid>
                     <Border Grid.Row="3" BorderBrush="#fff" BorderThickness="3,0,0,0">
                         <Adu:AduButtonIcon  IconTextMargin="4" CornerRadius="0,3,3,0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="请求头" Width="80" IconWidth="20" IconHeight="22"  Command="{Binding AddRequestHeaderCommand}" Foreground="#fff" Icon="{StaticResource Icon_Insert}" />
