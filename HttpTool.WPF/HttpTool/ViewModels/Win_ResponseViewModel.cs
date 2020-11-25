@@ -1,4 +1,5 @@
 ﻿
+using GalaSoft.MvvmLight;
 using HttpTool.API;
 using HttpTool.Model;
 using HttpTool.Styles.MessageBox;
@@ -14,7 +15,7 @@ using System.Windows.Input;
 
 namespace HttpTool.ViewModels
 {
-    public class Win_ResponseViewModel : AllViewModel
+    public class Win_ResponseViewModel : ViewModelBase
     {
         #region 事件
 
@@ -266,7 +267,7 @@ namespace HttpTool.ViewModels
         /// </summary>    
         public ICommand ToHeader => new DelegateCommand(obj =>
         {
-            Broadcast.PushBroadcast("RequestHeader", Header);
+            API.Broadcast.PushBroadcast("RequestHeader", Header);
         });
 
         /// <summary>
@@ -274,7 +275,7 @@ namespace HttpTool.ViewModels
         /// </summary>    
         public ICommand ToUrl => new DelegateCommand(obj =>
         {
-            Broadcast.PushBroadcast("RequestUrl", AUrl);
+            API.Broadcast.PushBroadcast("RequestUrl", AUrl);
         });
 
         #endregion
@@ -287,11 +288,7 @@ namespace HttpTool.ViewModels
         public Color StateColor
         {
             get { return _StateColor; }
-            set
-            {
-                _StateColor = value;
-                OnPropertyChanged(nameof(StateColor));
-            }
+            set { Set(ref _StateColor, value); }
         }
         private Brush _StateBrush=new SolidBrush(Color.White);
         /// <summary>
@@ -300,11 +297,7 @@ namespace HttpTool.ViewModels
         public Brush StateBrush
         {
             get { return _StateBrush; }
-            set
-            {
-                _StateBrush = value;
-                OnPropertyChanged(nameof(StateBrush));
-            }
+            set { Set(ref _StateBrush, value); }
         }
 
         private string _ReturnTitle;
@@ -314,11 +307,7 @@ namespace HttpTool.ViewModels
         public string ReturnTitle
         {
             get { return _ReturnTitle; }
-            set
-            {
-                _ReturnTitle = value;
-                OnPropertyChanged(nameof(ReturnTitle));
-            }
+            set { Set(ref _ReturnTitle, value); }
         }
 
         private string _HtmlText;
@@ -328,11 +317,7 @@ namespace HttpTool.ViewModels
         public string HtmlText
         {
             get { return _HtmlText; }
-            set
-            {
-                _HtmlText = value;
-                OnPropertyChanged(nameof(HtmlText));
-            }
+            set { Set(ref _HtmlText, value); }
         }
         private string _Server;
         /// <summary>
@@ -341,11 +326,7 @@ namespace HttpTool.ViewModels
         public string Server
         {
             get { return _Server; }
-            set
-            {
-                _Server = value;
-                OnPropertyChanged(nameof(Server));
-            }
+            set { Set(ref _Server, value); }
         }
         private string _IP;
         /// <summary>
@@ -354,11 +335,7 @@ namespace HttpTool.ViewModels
         public string IP
         {
             get { return _IP; }
-            set
-            {
-                _IP = value;
-                OnPropertyChanged(nameof(IP));
-            }
+            set { Set(ref _IP, value); }
         }
         private string _DNS;
         /// <summary>
@@ -367,11 +344,7 @@ namespace HttpTool.ViewModels
         public string DNS
         {
             get { return _DNS; }
-            set
-            {
-                _DNS = value;
-                OnPropertyChanged(nameof(DNS));
-            }
+            set { Set(ref _DNS, value); }
         }
         private string _AUrl;
         /// <summary>
@@ -380,11 +353,7 @@ namespace HttpTool.ViewModels
         public string AUrl
         {
             get { return _AUrl; }
-            set
-            {
-                _AUrl = value;
-                OnPropertyChanged(nameof(AUrl));
-            }
+            set { Set(ref _AUrl, value); }
         }
         private string _Header;
         /// <summary>
@@ -393,11 +362,7 @@ namespace HttpTool.ViewModels
         public string Header
         {
             get { return _Header; }
-            set
-            {
-                _Header = value;
-                OnPropertyChanged(nameof(Header));
-            }
+            set { Set(ref _Header, value); }
         }
         private string _Cookie;
         /// <summary>
@@ -406,11 +371,7 @@ namespace HttpTool.ViewModels
         public string Cookie
         {
             get { return _Cookie; }
-            set
-            {
-                _Cookie = value;
-                OnPropertyChanged(nameof(Cookie));
-            }
+            set { Set(ref _Cookie, value); }
         }
 
         private string _SSL;
@@ -420,11 +381,7 @@ namespace HttpTool.ViewModels
         public string SSL
         {
             get { return _SSL; }
-            set
-            {
-                _SSL = value;
-                OnPropertyChanged(nameof(SSL));
-            }
+            set { Set(ref _SSL, value); }
         }
 
         private string _RequestContent;
@@ -434,11 +391,7 @@ namespace HttpTool.ViewModels
         public string RequestContent
         {
             get { return _RequestContent; }
-            set
-            {
-                _RequestContent = value;
-                OnPropertyChanged(nameof(RequestContent));
-            }
+            set { Set(ref _RequestContent, value); }
         }
 
         #endregion
@@ -451,11 +404,7 @@ namespace HttpTool.ViewModels
         public WebList CurrentReturnWeb
         {
             get { return _CurrentReturnWeb; }
-            set
-            {
-                _CurrentReturnWeb = value;
-                OnPropertyChanged(nameof(CurrentReturnWeb));
-            }
+            set { Set(ref _CurrentReturnWeb, value); }
         }
         private string _Speed;
         /// <summary>
@@ -464,11 +413,7 @@ namespace HttpTool.ViewModels
         public string Speed
         {
             get { return _Speed; }
-            set
-            {
-                _Speed = value;
-                OnPropertyChanged(nameof(Speed));
-            }
+            set { Set(ref _Speed, value); }
         }
         #endregion
     }

@@ -27,7 +27,7 @@
         <Setter Property="MinWidth" Value="5" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Height" Value="30" />
-        <Setter Property="Foreground" Value="#fff" />
+        <Setter Property="Foreground" Value="{StaticResource BorderBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="10,4,4,7" />
@@ -108,7 +108,7 @@
                 <Setter Property="Background" Value="#10000000" />
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter  Property="Background" Value="#30000000" />
+                <Setter  Property="Background" Value="#05000000" />
                 <Setter Property="Foreground" Value="#80ffffff" />
             </Trigger>
             <MultiTrigger>
@@ -116,7 +116,7 @@
                     <Condition Property="IsSelected" Value="True" />
                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter  Property="Background" Value="#50000000" />
+                <Setter  Property="Background" Value="#05000000" />
                 <Setter Property="Foreground" Value="#60ffffff" />
             </MultiTrigger>
             <MultiDataTrigger>
@@ -124,7 +124,7 @@
                     <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
                 </MultiDataTrigger.Conditions>
                 <Setter  Property="Background" Value="#20000000" />
-                <Setter Property="Foreground" Value="#fff" />
+                <Setter Property="Foreground" Value="{StaticResource BorderBrush}" />
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>
@@ -203,7 +203,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="#fff" />
+                            <Setter Property="Foreground" Value="{StaticResource BorderBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

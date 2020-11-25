@@ -1,4 +1,5 @@
-﻿using HttpTool.ViewModels;
+﻿using GalaSoft.MvvmLight;
+using HttpTool.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,7 @@ namespace HttpTool.Model
         public string CodeName
         {
             get { return _CodeName; }
-            set
-            {
-                _CodeName = value;
-                OnPropertyChanged(nameof(CodeName));
-            }
+            set { Set(ref _CodeName, value); }
         }
         private string _CodeValue;
         /// <summary>
@@ -37,11 +34,7 @@ namespace HttpTool.Model
         public string CodeValue
         {
             get { return _CodeValue; }
-            set
-            {
-                _CodeValue = value;
-                OnPropertyChanged(nameof(CodeValue));
-            }
+            set { Set(ref _CodeValue, value); }
         }
         
     }

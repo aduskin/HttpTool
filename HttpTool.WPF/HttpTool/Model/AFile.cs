@@ -1,4 +1,5 @@
-﻿using HttpTool.ViewModels;
+﻿using GalaSoft.MvvmLight;
+using HttpTool.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,7 @@ namespace HttpTool.Model
         public string ID
         {
             get { return _ID; }
-            set
-            {
-                _ID = value;
-                OnPropertyChanged(nameof(ID));
-            }
+            set { Set(ref _ID, value); }
         }
         private string _ZDDWID;
         /// <summary>
@@ -29,11 +26,7 @@ namespace HttpTool.Model
         public string ZDDWID
         {
             get { return _ZDDWID; }
-            set
-            {
-                _ZDDWID = value;
-                OnPropertyChanged(nameof(ZDDWID));
-            }
+            set { Set(ref _ZDDWID, value); }
         }
         private string _FullPath;
         /// <summary>
@@ -42,11 +35,7 @@ namespace HttpTool.Model
         public string FullPath
         {
             get { return _FullPath; }
-            set
-            {
-                _FullPath = value;
-                OnPropertyChanged(nameof(FullPath));
-            }
+            set { Set(ref _FullPath, value); }
         }
         private string _FileName;
         /// <summary>
@@ -55,11 +44,7 @@ namespace HttpTool.Model
         public string FileName
         {
             get { return _FileName; }
-            set
-            {
-                _FileName = value;
-                OnPropertyChanged(nameof(FileName));
-            }
+            set { Set(ref _FileName, value); }
         }
         private string _Extension;
         /// <summary>
@@ -68,11 +53,7 @@ namespace HttpTool.Model
         public string Extension
         {
             get { return _Extension; }
-            set
-            {
-                _Extension = value;
-                OnPropertyChanged(nameof(Extension));
-            }
+            set { Set(ref _Extension, value); }
         }
 
 

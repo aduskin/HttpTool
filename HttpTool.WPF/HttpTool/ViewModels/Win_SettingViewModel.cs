@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using GalaSoft.MvvmLight;
 using HttpTool.API;
 using HttpTool.Styles.MessageBox;
 
 namespace HttpTool.ViewModels
 {
-    public class Win_SettingViewModel : AllViewModel
+    public class Win_SettingViewModel : ViewModelBase
     {
         string tempPath = System.Environment.CurrentDirectory + "\\temp";
         DirectoryInfo TheFolder = null;
@@ -67,11 +67,7 @@ namespace HttpTool.ViewModels
             {
                 return _BarMaxValue;
             }
-            set
-            {
-                _BarMaxValue = value;
-                OnPropertyChanged("BarMaxValue");
-            }
+            set { Set(ref _BarMaxValue, value); }
         }
         /// <summary>
         /// 当前进度
@@ -83,11 +79,7 @@ namespace HttpTool.ViewModels
             {
                 return _CurrentValue;
             }
-            set
-            {
-                _CurrentValue = value;
-                OnPropertyChanged("CurrentValue");
-            }
+            set { Set(ref _CurrentValue, value); }
         }
         #endregion
 
