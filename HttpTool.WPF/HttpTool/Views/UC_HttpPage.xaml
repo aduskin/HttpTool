@@ -147,7 +147,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Adu:MetroScrollViewer HorizontalScrollBarVisibility="Disabled" Visibility="{Binding RequestParameterTextVisibility}">
-                    <TextBox BorderThickness="0" Foreground="#fff" AllowDrop="True" TextWrapping="WrapWithOverflow" Background="#40ffffff" Padding="10" FontSize="14" AcceptsReturn="True" Text="{Binding RequestParameterText}" >
+                    <TextBox BorderThickness="0" Foreground="{StaticResource BorderBrush}" AllowDrop="True" TextWrapping="WrapWithOverflow" Background="#40ffffff" Padding="10" FontSize="14" AcceptsReturn="True" Text="{Binding RequestParameterText}" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Drop">
                                 <i:EventToCommand Command="{Binding DropUploadFile}" />

@@ -56,8 +56,8 @@
                     <Adu:AduButtonSvg Icon="{StaticResource Icon_Tool}" IconHeight="20" Foreground="#333" ToolTip="点击进入官网" IconWidth="20" Command="AduOpenLink:ControlCommands.OpenLink" CommandParameter="https://github.com/aduskin"/>
                     <TextBlock Text="HttpTool" VerticalAlignment="Center" FontSize="14"  FontWeight="Bold" Foreground="#333"></TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,140,0" VerticalAlignment="Center">
-                    <Adu:AduButtonIcon Icon="{StaticResource Icon_Succes}" CornerRadius="3" IconHeight="20" Foreground="#333" ToolTip="设置" MinWidth="40" IconWidth="20" Command="{Binding OpenSetting}"></Adu:AduButtonIcon>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,-10,130,0" VerticalAlignment="Center">
+                    <Adu:AduPathIconButton PathData="{StaticResource Icon_Succes}" CornerRadius="3" PathWidth="20" Height="30" Width="30" NormalPathColor="{StaticResource BorderBrush}" ToolTip="设置" MinWidth="40" Command="{Binding OpenSetting}"></Adu:AduPathIconButton>
                 </StackPanel>
             </Grid>
             <ct:ChromeTabControl x:Name="MyChromeTabControl" Grid.Row="1" WindowChrome.IsHitTestVisibleInChrome="True"

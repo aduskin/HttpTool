@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:HttpTool.ViewModels"
         xmlns:AduControls="clr-namespace:HttpTool.Scontrols"
          xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:i1="clr-namespace:HttpTool.API" BorderBrush="#999" mc:Ignorable="d"
+        xmlns:i1="clr-namespace:HttpTool.API" BorderBrush="#999" mc:Ignorable="d" WindowStyle="ToolWindow"
          Title="设置" Height="350" Width="460" MinHeight="300" MinWidth="460" Name="MainWin" TitleForeground="#888" MouseLeftButtonDown="MainWin_MouseLeftButtonDown"  Icon="../httptool.ico"  WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewmodels:Win_SettingViewModel></viewmodels:Win_SettingViewModel>
