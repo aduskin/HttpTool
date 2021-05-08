@@ -32,13 +32,13 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="40" />
                         </Grid.ColumnDefinitions>
-                        <Adu:AduComboBox IsReadOnly="True" Grid.Column="0" Margin="16,0,0,0" FontSize="12" Foreground="{StaticResource BorderBrush}" FontWeight="Bold" DisplayMemberPath="CodeName"
+                        <Adu:AduComboBox IsReadOnly="True" Grid.Column="0" CornerRadius="0" BorderThickness="0" Margin="16,0,0,0" FontSize="12" Foreground="{StaticResource BorderBrush}" FontWeight="Bold" DisplayMemberPath="CodeName"
                                     ItemsSource="{Binding HttpTypList}" ComBoxItemPanelBackground="#FFF" SelectedIndex="0" SelectedItem="{Binding CurrentHttpType}" SelectedValuePath="CodeValue">
                             <Adu:AduComboBox.ToolTip>
                                 <Adu:AduToolTip Content="请求方式"  PlacementEx="BottomCenter"/>
                             </Adu:AduComboBox.ToolTip>
                         </Adu:AduComboBox>
-                        <Adu:AduComboBox IsReadOnly="True" ComBoxItemPanelBackground="#FFF" Grid.Column="1" FontWeight="Bold" FontSize="12" Foreground="{StaticResource BorderBrush}"
+                        <Adu:AduComboBox IsReadOnly="True" CornerRadius="0" BorderThickness="0" ComBoxItemPanelBackground="#FFF" Grid.Column="1" FontWeight="Bold" FontSize="12" Foreground="{StaticResource BorderBrush}"
                                     DisplayMemberPath="CodeName" ItemsSource="{Binding CodeTypeList}" SelectedIndex="0" SelectedItem="{Binding CurrentCodeType}" SelectedValuePath="CodeValue" >
                             <Adu:AduComboBox.ToolTip>
                                 <Adu:AduToolTip Content="编码类型" PlacementEx="BottomCenter"/>

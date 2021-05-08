@@ -5,7 +5,6 @@
     xmlns:Adu="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:AduSkin.Interactivity;assembly=AduSkin"
-    xmlns:i1="clr-namespace:HttpTool.API"
      xmlns:AduOpenLink="clr-namespace:AduSkin.Interactivity;assembly=AduSkin"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:HttpTool.ViewModels"
@@ -53,11 +52,11 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" WindowChrome.IsHitTestVisibleInChrome="True">
                 <StackPanel Orientation="Horizontal" Margin="10,0" HorizontalAlignment="Left">
-                    <Adu:AduButtonSvg Icon="{StaticResource Icon_Tool}" IconHeight="20" Foreground="#333" ToolTip="点击进入官网" IconWidth="20" Command="AduOpenLink:ControlCommands.OpenLink" CommandParameter="https://github.com/aduskin"/>
+                    <Adu:AduButtonSvg Icon="{StaticResource Icon_Tool}" IconHeight="20" Foreground="#333" ToolTip="点击进入官网" IconWidth="20" Command="AduOpenLink:ControlCommands.OpenLink" CommandParameter="https://github.com/aduskin/HttpTool"/>
                     <TextBlock Text="HttpTool" VerticalAlignment="Center" FontSize="14"  FontWeight="Bold" Foreground="#333"></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,-10,130,0" VerticalAlignment="Center">
-                    <Adu:AduPathIconButton PathData="{StaticResource Icon_Succes}" CornerRadius="3" PathWidth="20" Height="30" Width="30" NormalPathColor="{StaticResource BorderBrush}" ToolTip="设置" MinWidth="40" Command="{Binding OpenSetting}"></Adu:AduPathIconButton>
+                    <Adu:AduPathIconButton PathData="{StaticResource Icon_Logo}" CornerRadius="3" PathWidth="20" Height="30" Width="30" NormalPathColor="{StaticResource BorderBrush}" ToolTip="设置" MinWidth="40" Command="{Binding OpenSetting}"></Adu:AduPathIconButton>
                 </StackPanel>
             </Grid>
             <ct:ChromeTabControl x:Name="MyChromeTabControl" Grid.Row="1" WindowChrome.IsHitTestVisibleInChrome="True"

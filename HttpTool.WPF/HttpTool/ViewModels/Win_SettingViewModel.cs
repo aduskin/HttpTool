@@ -27,12 +27,13 @@ namespace HttpTool.ViewModels
                 return new DelegateCommand(obj =>
                 {
                     BindDropdown();
-                    if (!Directory.Exists(tempPath))
-                    { Directory.CreateDirectory(tempPath); }
                     TheFolder = new DirectoryInfo(tempPath);
-                    Files = TheFolder.GetFiles();
-                    BarMaxValue = Files.Length;
-                    CurrentValue = "剩余 " + BarMaxValue + " 个文件可清理";
+                    if (TheFolder.Exists)
+                    {
+                        Files = TheFolder.GetFiles();
+                        BarMaxValue = Files.Length;
+                        CurrentValue = "剩余 " + BarMaxValue + " 个文件可清理";
+                    }
                 });
             }
         }
