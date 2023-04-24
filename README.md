@@ -1,5 +1,5 @@
 # HttpTool
-A simple HTTP request tool for WPF
+A simple http request tool for WPF
 ![image](https://github.com/Hero3821/HttpTool/blob/master/ScreenShot/cover.png)
 
 ### 贡献者
