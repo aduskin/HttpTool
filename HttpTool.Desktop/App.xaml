@@ -1,15 +1,17 @@
-﻿<Application
-    x:Class="HttpTool.App"
+<Application
+    x:Class="HttpTool.Desktop.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:AduSkin="https://github.com/aduskin"
-    xmlns:local="clr-namespace:HttpTool"
-    StartupUri="MainWindow.xaml">
+    xmlns:local="clr-namespace:HttpTool.Desktop"
+    Exit="Application_Exit"
+    Startup="Application_Startup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <AduSkin:AduSkinTheme ThemeType="Light" />
                 <ResourceDictionary Source="pack://application:,,,/AduSkin;component/Themes/Converters.xaml" />
+                <ResourceDictionary Source="Themes/Default.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

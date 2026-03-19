@@ -11,3 +11,10 @@
 /HttpTool.WPF/packages
 /HttpTool/bin/Debug/net10.0-windows
 /HttpTool/obj
+/HttpTool.Core/bin/Debug/net10.0
+/HttpTool.Core/obj
+/HttpTool.Desktop/obj
+/HttpTool.Desktop/bin/Debug/net10.0-windows
+/HttpTool.Infrastructure/bin/Debug/net10.0
+/HttpTool.Infrastructure/obj
+/.claude

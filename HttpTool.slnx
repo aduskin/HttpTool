@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="HttpTool/HttpTool.csproj" />
+  <Project Path="HttpTool.Core/HttpTool.Core.csproj" />
+  <Project Path="HttpTool.Desktop/HttpTool.Desktop.csproj" />
+  <Project Path="HttpTool.Infrastructure/HttpTool.Infrastructure.csproj" />
 </Solution>

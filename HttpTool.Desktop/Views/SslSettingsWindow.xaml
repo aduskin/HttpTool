@@ -1,0 +1,103 @@
+<AduSkin:AduWindow
+    x:Class="HttpTool.Desktop.Views.SslSettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AduAttach="clr-namespace:AduSkin.AdditionalAttributes;assembly=AduSkin"
+    xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="SSL/TLS Settings"
+    Width="500"
+    Height="350"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Header  -->
+        <TextBlock
+            Grid.Row="0"
+            FontSize="14"
+            FontWeight="SemiBold"
+            Text="SSL/TLS Settings" />
+
+        <!--  Settings  -->
+        <StackPanel Grid.Row="1" Margin="0,16,0,0">
+            <!--  Certificate Validation  -->
+            <AduSkin:AduCheckBox
+                x:Name="VerifySslCheckBox"
+                Margin="0,0,0,16"
+                Content="Verify SSL/TLS Certificates" />
+
+            <!--  Client Certificate  -->
+            <TextBlock
+                Margin="0,0,0,8"
+                FontWeight="SemiBold"
+                Text="Client Certificate (Optional)" />
+
+            <TextBlock
+                Margin="0,0,0,12"
+                Foreground="{DynamicResource NormalSecondaryForeground}"
+                Text="For APIs that require client certificate authentication."
+                TextWrapping="Wrap" />
+
+            <!--  Certificate File  -->
+            <TextBlock Margin="0,0,0,4" Text="Certificate File (.pfx or .p12)" />
+            <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <AduSkin:AduTextBox x:Name="CertificatePathTextBox" IsReadOnly="True" />
+                <AduSkin:AduButton
+                    Grid.Column="1"
+                    Margin="8,0,0,0"
+                    Click="BrowseCertificate_Click"
+                    Content="Browse" />
+            </Grid>
+
+            <!--  Certificate Password  -->
+            <TextBlock Margin="0,0,0,4" Text="Certificate Password" />
+            <AduSkin:AduTextBox
+                x:Name="CertificatePasswordTextBox"
+                Width="200"
+                Margin="0,0,0,8"
+                HorizontalAlignment="Left" />
+
+            <!--  Info  -->
+            <Border
+                Margin="0,16,0,0"
+                Padding="12"
+                Background="{DynamicResource WarningBackgroundBrush}"
+                CornerRadius="4">
+                <StackPanel>
+                    <TextBlock
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource WarningForegroundBrush}"
+                        Text="Warning" />
+                    <TextBlock
+                        Margin="0,4,0,0"
+                        Foreground="{DynamicResource WarningForegroundBrush}"
+                        Text="Disabling certificate verification allows connections to servers with self-signed or invalid certificates. This may pose a security risk."
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!--  Buttons  -->
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <AduSkin:AduButton
+                Margin="0,0,8,0"
+                Click="Save_Click"
+                Content="Save" />
+            <AduSkin:AduButton Click="Close_Click" Content="Cancel" />
+        </StackPanel>
+    </Grid>
+</AduSkin:AduWindow>

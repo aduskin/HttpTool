@@ -1,0 +1,251 @@
+<AduSkin:AduWindow
+    x:Class="HttpTool.Desktop.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AduAttach="clr-namespace:AduSkin.AdditionalAttributes;assembly=AduSkin"
+    xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
+    xmlns:views="clr-namespace:HttpTool.Desktop.Views"
+    Title="HttpTool"
+    Width="1100"
+    Height="700"
+    MinWidth="800"
+    MinHeight="500"
+    AduAttach:HeaderAttach.Background="{DynamicResource NormalTransparentBrush}"
+    AduAttach:HeaderAttach.FontSize="14"
+    AduAttach:HeaderAttach.Foreground="{DynamicResource NormalForeground}"
+    AduAttach:HeaderAttach.Height="40"
+    AduAttach:HeaderAttach.IconWidth="20"
+    AduAttach:HeaderAttach.Margin="0,0,0,0"
+    AduAttach:HeaderAttach.Visible="Visible"
+    WindowStartupLocation="CenterScreen">
+    <AduSkin:AduWindow.InputBindings>
+        <KeyBinding
+            Key="N"
+            Command="{Binding NewProjectCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
+            Key="O"
+            Command="{Binding OpenProjectCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
+            Key="S"
+            Command="{Binding SaveProjectCommand}"
+            Modifiers="Ctrl" />
+    </AduSkin:AduWindow.InputBindings>
+    <AduSkin:AduWindow.Menu>
+        <AduSkin:AduTitleMenu Margin="10,0" HorizontalAlignment="Left">
+            <AduSkin:AduTitleMenuItem Header="_File">
+                <AduSkin:AduMenuItem
+                    Command="{Binding NewProjectCommand}"
+                    Header="_New Project"
+                    InputGestureText="Ctrl+N" />
+                <AduSkin:AduMenuItem
+                    Command="{Binding OpenProjectCommand}"
+                    Header="_Open Project..."
+                    InputGestureText="Ctrl+O" />
+                <AduSkin:AduMenuItem Click="Import_Click" Header="_Import..." />
+                <AduSkin:AduMenuItem Click="Export_Click" Header="_Export..." />
+                <Separator />
+                <AduSkin:AduMenuItem Click="CopyAsCurl_Click" Header="Copy as _cURL" />
+                <AduSkin:AduMenuItem Click="GenerateCode_Click" Header="_Generate Code..." />
+                <Separator />
+                <AduSkin:AduMenuItem
+                    Command="{Binding SaveProjectCommand}"
+                    Header="_Save"
+                    InputGestureText="Ctrl+S" />
+                <AduSkin:AduMenuItem Command="{Binding SaveProjectAsCommand}" Header="Save _As..." />
+                <Separator />
+                <AduSkin:AduMenuItem
+                    Click="Exit_Click"
+                    Header="E_xit"
+                    InputGestureText="Alt+F4" />
+            </AduSkin:AduTitleMenuItem>
+            <AduSkin:AduTitleMenuItem Header="_Edit">
+                <AduSkin:AduMenuItem Command="{Binding NewApiCommand}" Header="_New Request" />
+            </AduSkin:AduTitleMenuItem>
+            <AduSkin:AduTitleMenuItem Header="_Tools">
+                <AduSkin:AduMenuItem Click="CookieManager_Click" Header="_Cookie Manager" />
+                <AduSkin:AduMenuItem Click="ProxySettings_Click" Header="_Proxy Settings" />
+                <AduSkin:AduMenuItem Click="SslSettings_Click" Header="_SSL/TLS Settings" />
+                <Separator />
+                <AduSkin:AduMenuItem Click="WebSocket_Click" Header="_WebSocket / SSE" />
+            </AduSkin:AduTitleMenuItem>
+            <AduSkin:AduTitleMenuItem Header="_View">
+                <AduSkin:AduMenuItem Click="ViewHistory_Click" Header="_History" />
+                <AduSkin:AduMenuItem Click="ViewEnvironment_Click" Header="_Environment Variables" />
+            </AduSkin:AduTitleMenuItem>
+        </AduSkin:AduTitleMenu>
+    </AduSkin:AduWindow.Menu>
+    <Border BorderBrush="{DynamicResource NormalBorderBrush}" BorderThickness="0,1,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <!--  Main Content  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="250"
+                        MinWidth="150"
+                        MaxWidth="300" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Left Panel - Project Tree  -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Project List Header  -->
+                    <Border
+                        Grid.Row="0"
+                        Padding="12,8"
+                        BorderBrush="{DynamicResource NormalBorderBrush}"
+                        BorderThickness="0,0,0,1">
+                        <TextBlock FontSize="14" Text="Projects" />
+                    </Border>
+
+                    <!--  Add Button  -->
+                    <!--
+                    <UniformGrid
+                        Grid.Row="1"
+                        Margin="8,8"
+                        Columns="2">
+                        <AduSkin:AduButton
+                            Width="Auto"
+                            Margin="0,0,8,0"
+                            Background="{DynamicResource PrimaryBrush}"
+                            Command="{Binding NewProjectCommand}"
+                            Content="New"
+                            Foreground="White" />
+                        <AduSkin:AduButton
+                            Width="Auto"
+                            Command="{Binding OpenProjectCommand}"
+                            Content="Open" />
+                    </UniformGrid>-->
+
+                    <!--  Project Tree  -->
+                    <AduSkin:AduTreeView
+                        x:Name="ProjectTree"
+                        Grid.Row="1"
+                        Padding="4"
+                        ItemsSource="{Binding ProjectTabs}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        SelectedItemChanged="ProjectTree_SelectedItemChanged">
+                        <AduSkin:AduTreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Apis}">
+                                <StackPanel Height="30" Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                                </StackPanel>
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Height="30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Border
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="3">
+                                                <TextBlock
+                                                    Margin="4,2"
+                                                    FontSize="10"
+                                                    Foreground="White"
+                                                    Text="{Binding Method}"
+                                                    TextAlignment="Center" />
+                                            </Border>
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Name}"
+                                                TextTrimming="CharacterEllipsis" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </AduSkin:AduTreeView.ItemTemplate>
+                    </AduSkin:AduTreeView>
+                </Grid>
+
+                <!--  Splitter  -->
+                <AduSkin:AduGridSplitter
+                    Grid.Column="1"
+                    Width="Auto"
+                    HorizontalAlignment="Center"
+                    ResizeDirection="Columns" />
+
+                <!--  Right Panel - Request Editor  -->
+                <Grid Grid.Column="2">
+                    <!--  Tab Control for Open Projects  -->
+                    <AduSkin:AduTabControl
+                        AduAttach:BorderAttach.CornerRadius="0"
+                        BorderThickness="0"
+                        ItemsSource="{Binding ProjectTabs}"
+                        SelectedItem="{Binding SelectedTab}">
+                        <AduSkin:AduTabControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                                    <AduSkin:AduPathIconButton
+                                        Margin="8,0,0,0"
+                                        Padding="4,0"
+                                        AduAttach:PathBrushAttach.NormalPathBrush="Black"
+                                        AduAttach:PathDataAttach.PathData="{DynamicResource Icon_SystemClose}"
+                                        AduAttach:PathDataAttach.Width="8"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
+                                        Cursor="Hand" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </AduSkin:AduTabControl.ItemTemplate>
+                        <AduSkin:AduTabControl.ContentTemplate>
+                            <DataTemplate>
+                                <views:RequestEditorView DataContext="{Binding}" />
+                            </DataTemplate>
+                        </AduSkin:AduTabControl.ContentTemplate>
+                    </AduSkin:AduTabControl>
+                </Grid>
+            </Grid>
+            <!--  Empty State  -->
+            <Border Background="{DynamicResource NormalBackground}" Visibility="{Binding ProjectTabs.Count, Converter={StaticResource ZeroToVisibleConverter}, FallbackValue=Collapsed}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="30"
+                        Text="HttpTool"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Margin="0,8,0,16"
+                        Text="Create a new project or open an existing one."
+                        TextAlignment="Center" />
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <AduSkin:AduButton
+                            Margin="0,0,8,0"
+                            Background="{DynamicResource PrimaryBrush}"
+                            BorderThickness="0"
+                            Command="{Binding NewProjectCommand}"
+                            Content="New Project"
+                            Foreground="White" />
+                        <AduSkin:AduButton Command="{Binding OpenProjectCommand}" Content="Open Project" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <!--  Status Bar  -->
+            <Border
+                Grid.Row="1"
+                Padding="8,4"
+                BorderBrush="{DynamicResource NormalBorderBrush}"
+                BorderThickness="0,1,0,0">
+                <TextBlock FontSize="10" Text="Ready" />
+            </Border>
+        </Grid>
+    </Border>
+</AduSkin:AduWindow>
