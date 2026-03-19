@@ -9,3 +9,5 @@
 /HttpTool.WPF/HttpTool/obj/Release
 /.vs
 /HttpTool.WPF/packages
+/HttpTool/bin/Debug/net10.0-windows
+/HttpTool/obj
