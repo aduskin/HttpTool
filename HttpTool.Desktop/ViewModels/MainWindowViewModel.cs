@@ -43,6 +43,7 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly IHttpRequestService _httpRequestService;
     private readonly IHistoryService _historyService;
     private readonly IFormatterService _formatterService;
+    private readonly IStorageService _storageService;
 
     [ObservableProperty]
     private ObservableCollection<ProjectTabItem> _projectTabs = new();
@@ -54,21 +55,41 @@ public partial class MainWindowViewModel : ObservableObject
     private ObservableCollection<RequestHistory> _history = new();
 
     [ObservableProperty]
+    private ObservableCollection<RecentProjectItem> _recentProjects = new();
+
+    [ObservableProperty]
     private bool _isLoading;
 
     public MainWindowViewModel(
         IProjectService projectService,
         IHttpRequestService httpRequestService,
         IHistoryService historyService,
-        IFormatterService formatterService)
+        IFormatterService formatterService,
+        IStorageService storageService)
     {
         _projectService = projectService;
         _httpRequestService = httpRequestService;
         _historyService = historyService;
         _formatterService = formatterService;
+        _storageService = storageService;
 
         _projectService.ProjectChanged += OnProjectChanged;
         _historyService.HistoryAdded += OnHistoryAdded;
+
+        LoadRecentProjectsAsync();
+    }
+
+    public async void LoadRecentProjectsAsync()
+    {
+        var paths = await _storageService.GetRecentProjectsAsync();
+        RecentProjects.Clear();
+        foreach (var path in paths)
+        {
+            if (System.IO.File.Exists(path))
+            {
+                RecentProjects.Add(new RecentProjectItem { FilePath = path });
+            }
+        }
     }
 
     private void OnProjectChanged(object? sender, Project? project)
@@ -89,7 +110,7 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void NewProject()
+    private async Task NewProjectAsync()
     {
         var project = _projectService.CreateProject();
         var tab = new ProjectTabItem
@@ -100,6 +121,13 @@ public partial class MainWindowViewModel : ObservableObject
         };
         ProjectTabs.Add(tab);
         SelectedTab = tab;
+
+        // 如果项目已保存，添加到最近项目
+        if (!string.IsNullOrEmpty(project.FilePath))
+        {
+            await _storageService.AddToRecentProjectsAsync(project.FilePath);
+            LoadRecentProjectsAsync();
+        }
     }
 
     [RelayCommand]
@@ -140,7 +168,35 @@ public partial class MainWindowViewModel : ObservableObject
                 ProjectTabs.Add(tab);
                 SelectedTab = tab;
             }
+
+            // 添加到最近项目
+            await _storageService.AddToRecentProjectsAsync(filePath);
+            LoadRecentProjectsAsync();
         }
+    }
+
+    [RelayCommand]
+    private async Task OpenRecentProjectAsync(RecentProjectItem? recentItem)
+    {
+        if (recentItem == null || string.IsNullOrEmpty(recentItem.FilePath))
+            return;
+
+        if (!System.IO.File.Exists(recentItem.FilePath))
+        {
+            MessageBox.Show($"Project file not found: {recentItem.FilePath}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            // 移除不存在的项目
+            RecentProjects.Remove(recentItem);
+            return;
+        }
+
+        await OpenProjectFileAsync(recentItem.FilePath);
+    }
+
+    [RelayCommand]
+    private async Task RemoveProjectAsync(RecentProjectItem? recent)
+    {
+        if (recent == null) return;
+        RecentProjects.Remove(recent);
     }
 
     [RelayCommand]
@@ -177,6 +233,10 @@ public partial class MainWindowViewModel : ObservableObject
             SelectedTab.Project.Apis = SelectedTab.Apis.ToList();
             await _projectService.SaveProjectAsAsync(dialog.FileName);
             SelectedTab.Title = SelectedTab.Project.Name;
+
+            // 添加到最近项目
+            await _storageService.AddToRecentProjectsAsync(dialog.FileName);
+            LoadRecentProjectsAsync();
         }
     }
 

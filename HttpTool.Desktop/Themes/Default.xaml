@@ -9,6 +9,7 @@
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converters:EnumConverter x:Key="EnumConverter" />
     <converters:ZeroToVisibleConverter x:Key="ZeroToVisibleConverter" />
+    <converters:ZeroToCollapsedConverter x:Key="ZeroToCollapsedConverter" />
     <converters:AuthValueVisibilityConverter x:Key="AuthValueVisibilityConverter" />
     <converters:StatusColorConverter x:Key="StatusColorConverter" />
     <converters:BinaryToCollapsedConverter x:Key="BinaryToCollapsedConverter" />

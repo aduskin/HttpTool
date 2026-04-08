@@ -46,6 +46,17 @@
                 <AduSkin:AduMenuItem Click="Import_Click" Header="_Import..." />
                 <AduSkin:AduMenuItem Click="Export_Click" Header="_Export..." />
                 <Separator />
+                <AduSkin:AduMenuItem Header="Recent Projects" ItemsSource="{Binding RecentProjects}">
+                    <AduSkin:AduMenuItem.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource AduMenuItem}" TargetType="AduSkin:AduMenuItem">
+                            <Setter Property="Header" Value="{Binding FileName}" />
+                            <Setter Property="ToolTip" Value="{Binding FilePath}" />
+                            <Setter Property="Command" Value="{Binding DataContext.OpenRecentProjectCommand, RelativeSource={RelativeSource AncestorType=AduSkin:AduWindow}}" />
+                            <Setter Property="CommandParameter" Value="{Binding}" />
+                        </Style>
+                    </AduSkin:AduMenuItem.ItemContainerStyle>
+                </AduSkin:AduMenuItem>
+                <Separator />
                 <AduSkin:AduMenuItem Click="CopyAsCurl_Click" Header="Copy as _cURL" />
                 <AduSkin:AduMenuItem Click="GenerateCode_Click" Header="_Generate Code..." />
                 <Separator />
@@ -215,28 +226,9 @@
                     </AduSkin:AduTabControl>
                 </Grid>
             </Grid>
-            <!--  Empty State  -->
-            <Border Background="{DynamicResource NormalBackground}" Visibility="{Binding ProjectTabs.Count, Converter={StaticResource ZeroToVisibleConverter}, FallbackValue=Collapsed}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock
-                        FontSize="30"
-                        Text="HttpTool"
-                        TextAlignment="Center" />
-                    <TextBlock
-                        Margin="0,8,0,16"
-                        Text="Create a new project or open an existing one."
-                        TextAlignment="Center" />
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <AduSkin:AduButton
-                            Margin="0,0,8,0"
-                            Background="{DynamicResource PrimaryBrush}"
-                            BorderThickness="0"
-                            Command="{Binding NewProjectCommand}"
-                            Content="New Project"
-                            Foreground="White" />
-                        <AduSkin:AduButton Command="{Binding OpenProjectCommand}" Content="Open Project" />
-                    </StackPanel>
-                </StackPanel>
+            <!--  Welcome View  -->
+            <Border Visibility="{Binding ProjectTabs.Count, Converter={StaticResource ZeroToVisibleConverter}, FallbackValue=Collapsed}">
+                <views:WelcomeView />
             </Border>
             <!--  Status Bar  -->
             <Border
