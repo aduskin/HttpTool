@@ -171,7 +171,7 @@
                             Header="Timeout:"
                             Prompt="s"
                             PromptVisibility="Visible">
-                            <AduSkin:AduIntegerUpDown Width="60" Text="{Binding SelectedApi.TimeoutSeconds, UpdateSourceTrigger=PropertyChanged}" />
+                            <AduSkin:AduIntegerUpDown Width="60" Value="{Binding SelectedApi.TimeoutSeconds, UpdateSourceTrigger=PropertyChanged}" />
                         </AduSkin:AduFormBox>
 
                         <!--  Send Button  -->
@@ -444,88 +444,85 @@
 
                 <AduSkin:AduGridSplitter Grid.Row="2" ResizeDirection="Rows" />
                 <!--  Response Section  -->
-                <Border
-                    Grid.Row="3"
-                    MaxHeight="300"
-                    BorderBrush="{DynamicResource NormalBorderBrush}"
-                    BorderThickness="0,1,0,0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                <Grid Grid.Row="3" MaxHeight="300">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                        <!--  Response Header  -->
-                        <Border
-                            Grid.Row="0"
-                            Padding="12,8"
-                            BorderBrush="{DynamicResource NormalBorderBrush}"
-                            BorderThickness="0,0,0,1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                    <!--  Response Header  -->
+                    <Border
+                        Grid.Row="0"
+                        Padding="12,8"
+                        BorderBrush="{DynamicResource NormalBorderBrush}"
+                        BorderThickness="0,0,0,1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="SemiBold"
+                                Text="Response" />
+
+                            <!--  Response Status  -->
+                            <StackPanel
+                                Grid.Column="1"
+                                Margin="16,0"
+                                Orientation="Horizontal"
+                                Visibility="{Binding CurrentResponse, Converter={StaticResource NullToCollapsedConverter}}">
                                 <TextBlock
+                                    FontWeight="Bold"
+                                    Foreground="{Binding CurrentResponse.IsSuccess, Converter={StaticResource StatusColorConverter}}"
+                                    Text="{Binding CurrentResponse.StatusCode}" />
+                                <TextBlock
+                                    Margin="8,0,0,0"
                                     VerticalAlignment="Center"
-                                    FontWeight="SemiBold"
-                                    Text="Response" />
+                                    Text="{Binding CurrentResponse.StatusDescription}" />
+                                <TextBlock Margin="16,0,0,0" Text="{Binding CurrentResponse.ElapsedMilliseconds, StringFormat='{}{0:F0} ms'}" />
+                                <TextBlock Margin="16,0,0,0" Text="{Binding CurrentResponse.ContentLengthFormatted}" />
+                            </StackPanel>
 
-                                <!--  Response Status  -->
-                                <StackPanel
-                                    Grid.Column="1"
-                                    Margin="16,0"
-                                    Orientation="Horizontal"
-                                    Visibility="{Binding CurrentResponse, Converter={StaticResource NullToCollapsedConverter}}">
-                                    <TextBlock
-                                        FontWeight="Bold"
-                                        Foreground="{Binding CurrentResponse.IsSuccess, Converter={StaticResource StatusColorConverter}}"
-                                        Text="{Binding CurrentResponse.StatusCode}" />
-                                    <TextBlock
-                                        Margin="8,0,0,0"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding CurrentResponse.StatusDescription}" />
-                                    <TextBlock Margin="16,0,0,0" Text="{Binding CurrentResponse.ElapsedMilliseconds, StringFormat='{}{0:F0} ms'}" />
-                                    <TextBlock Margin="16,0,0,0" Text="{Binding CurrentResponse.ContentLengthFormatted}" />
-                                </StackPanel>
+                            <!--  Loading Indicator  -->
+                            <TextBlock
+                                Grid.Column="2"
+                                Margin="16,0"
+                                Text="Sending request..."
+                                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-                                <!--  Loading Indicator  -->
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Margin="16,0"
-                                    Text="Sending request..."
-                                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <!--  Error Message  -->
+                            <TextBlock
+                                Grid.Column="3"
+                                Margin="16,0"
+                                VerticalAlignment="Center"
+                                Foreground="Red"
+                                Text="{Binding CurrentResponse.ErrorMessage}"
+                                TextTrimming="CharacterEllipsis"
+                                ToolTip="{Binding CurrentResponse.ErrorMessage}"
+                                Visibility="{Binding CurrentResponse.ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
+                        </Grid>
+                    </Border>
 
-                                <!--  Error Message  -->
-                                <TextBlock
-                                    Grid.Column="3"
-                                    Margin="16,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="Red"
-                                    Text="{Binding CurrentResponse.ErrorMessage}"
-                                    TextTrimming="CharacterEllipsis"
-                                    ToolTip="{Binding CurrentResponse.ErrorMessage}"
-                                    Visibility="{Binding CurrentResponse.ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
-                            </Grid>
-                        </Border>
-
-                        <!--  Response Body  -->
-                        <AduSkin:AduTextBox
-                            Grid.Row="1"
-                            Height="Auto"
-                            Margin="8"
-                            AcceptsReturn="True"
-                            FontFamily="Consolas"
-                            HorizontalScrollBarVisibility="Auto"
-                            IsReadOnly="True"
-                            Text="{Binding CurrentResponse.Body, Mode=OneWay}"
-                            TextWrapping="Wrap"
-                            VerticalScrollBarVisibility="Auto" />
-                    </Grid>
-                </Border>
+                    <!--  Response Body  -->
+                    <AduSkin:AduTextBox
+                        Grid.Row="1"
+                        Height="Auto"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Top"
+                        AduAttach:BorderAttach.CornerRadius="0,0,6,6"
+                        BorderThickness="0"
+                        FontSize="10"
+                        IsAutoScrollToBottom="True"
+                        IsReadOnly="True"
+                        MultipleLine="True"
+                        Text="{Binding CurrentResponse.Body, Mode=OneWay}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </Grid>
             </Grid>
 
             <!--  Empty State for API Selection  -->
