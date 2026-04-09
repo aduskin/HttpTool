@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows;
 using AduSkin.Controls;
+using HttpTool.Core.Constants;
 using HttpTool.Core.Interfaces;
 using HttpTool.Core.Models;
 using HttpTool.Desktop.ViewModels;
@@ -68,7 +69,7 @@ public partial class MainWindow : AduWindow
     {
         var dialog = new OpenFileDialog
         {
-            Filter = "All Supported Files (*.json;*.httptool)|*.json;*.httptool|Postman Collection (*.json)|*.json|HttpTool Project (*.httptool)|*.httptool",
+            Filter = $"All Supported Files (*.json;*{ProjectConstant.ProjectExtension})|*.json;*{ProjectConstant.ProjectExtension}|Postman Collection (*.json)|*.json|HttpTool Project (*{ProjectConstant.ProjectExtension})|*{ProjectConstant.ProjectExtension}",
             Title = "Import"
         };
 
@@ -103,7 +104,7 @@ public partial class MainWindow : AduWindow
 
         var dialog = new SaveFileDialog
         {
-            Filter = "HttpTool Project (*.httptool)|*.httptool|JSON (*.json)|*.json",
+            Filter = $"HttpTool Project (*{ProjectConstant.ProjectExtension})|*{ProjectConstant.ProjectExtension}|JSON (*.json)|*.json",
             Title = "Export",
             FileName = vm.SelectedTab.Project.Name
         };

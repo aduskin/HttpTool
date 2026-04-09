@@ -1,10 +1,11 @@
-using System.Collections.ObjectModel;
-using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HttpTool.Core.Constants;
 using HttpTool.Core.Interfaces;
 using HttpTool.Core.Models;
 using Microsoft.Win32;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace HttpTool.Desktop.ViewModels;
 
@@ -135,7 +136,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         var dialog = new OpenFileDialog
         {
-            Filter = "HttpTool Project (*.httptool)|*.httptool|All Files (*.*)|*.*",
+            Filter = $"HttpTool Project (*{ProjectConstant.ProjectExtension})|*{ProjectConstant.ProjectExtension}|All Files (*.*)|*.*",
             Title = "Open Project"
         };
 
@@ -224,9 +225,9 @@ public partial class MainWindowViewModel : ObservableObject
 
         var dialog = new SaveFileDialog
         {
-            Filter = "HttpTool Project (*.httptool)|*.httptool",
+            Filter = $"HttpTool Project (*{ProjectConstant.ProjectExtension})|*{ProjectConstant.ProjectExtension}",
             Title = "Save Project As",
-            FileName = SelectedTab.Project.Name + ".httptool"
+            FileName = $"{SelectedTab.Project.Name}{ProjectConstant.ProjectExtension}"
         };
 
         if (dialog.ShowDialog() == true)

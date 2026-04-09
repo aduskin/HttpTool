@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using HttpTool.Core.Constants;
 using HttpTool.Core.Enums;
 using HttpTool.Core.Interfaces;
 using HttpTool.Core.Models;
@@ -31,14 +32,13 @@ public class ImportExportService : IImportExportService
         if (!File.Exists(filePath))
             return null;
 
-        var extension = Path.GetExtension(filePath).ToLowerInvariant();
-
-        return extension switch
-        {
-            ".json" => await ImportPostmanCollectionAsync(filePath),
-            ".httptool" => await ImportHttpToolProjectAsync(filePath),
-            _ => await ImportPostmanCollectionAsync(filePath)
-        };
+        var extension = Path.GetExtension(filePath).ToLowerInvariant(); 
+        if (extension == ProjectConstant.ImportPostman)
+            return await ImportPostmanCollectionAsync(filePath);
+        else if (extension == ProjectConstant.ProjectExtension)
+            return await ImportHttpToolProjectAsync(filePath);
+        else
+            return await ImportPostmanCollectionAsync(filePath);
     }
 
     private async Task<Project> ImportPostmanCollectionAsync(string filePath)
