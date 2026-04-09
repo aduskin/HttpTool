@@ -212,7 +212,8 @@ public partial class MainWindowViewModel : ObservableObject
         }
 
         SelectedTab.Project.Apis = SelectedTab.Apis.ToList();
-        await _projectService.SaveCurrentProjectAsync();
+        SelectedTab.Project.Name = SelectedTab.Title;
+        await _projectService.SaveProjectAsync(SelectedTab.Project);
     }
 
     [RelayCommand]
@@ -230,6 +231,7 @@ public partial class MainWindowViewModel : ObservableObject
 
         if (dialog.ShowDialog() == true)
         {
+            SelectedTab.Project.Name = SelectedTab.Title;
             SelectedTab.Project.Apis = SelectedTab.Apis.ToList();
             await _projectService.SaveProjectAsAsync(dialog.FileName);
             SelectedTab.Title = SelectedTab.Project.Name;

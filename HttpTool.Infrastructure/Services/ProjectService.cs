@@ -40,20 +40,18 @@ public class ProjectService : IProjectService
         return project;
     }
 
-    public async Task SaveCurrentProjectAsync()
+    public async Task SaveProjectAsync(Project? project)
     {
-        if (_currentProject == null)
-        {
+        if (project == null)
             return;
-        }
 
-        if (string.IsNullOrEmpty(_currentProject.FilePath))
+        if (string.IsNullOrEmpty(project.FilePath))
         {
             throw new InvalidOperationException("Project file path is not set. Use SaveProjectAsAsync instead.");
         }
 
-        _currentProject.UpdatedAt = DateTime.Now;
-        await _storageService.SaveProjectAsync(_currentProject);
+        project.UpdatedAt = DateTime.Now;
+        await _storageService.SaveProjectAsync(project);
     }
 
     public async Task SaveProjectAsAsync(string filePath)

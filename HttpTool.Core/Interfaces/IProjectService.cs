@@ -23,9 +23,9 @@ public interface IProjectService
     Task<Project?> OpenProjectAsync(string filePath);
 
     /// <summary>
-    /// 保存当前项目
+    /// 保存项目
     /// </summary>
-    Task SaveCurrentProjectAsync();
+    Task SaveProjectAsync(Project? project);
 
     /// <summary>
     /// 保存项目到指定路径

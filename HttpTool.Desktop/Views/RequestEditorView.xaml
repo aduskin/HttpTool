@@ -29,10 +29,10 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock
+                    <AduSkin:AduEditableTextBlock
                         VerticalAlignment="Center"
                         FontSize="12"
-                        Text="API Requests" />
+                        Text="{Binding Title}" />
                 </StackPanel>
 
                 <!--  Request Name  -->
@@ -76,7 +76,7 @@
                     <DataTemplate>
                         <Grid Height="30" Margin="0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
