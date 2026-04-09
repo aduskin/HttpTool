@@ -27,6 +27,12 @@ public partial class ProjectTabItem : ObservableObject
     private ApiRequest? _selectedApi;
 
     [ObservableProperty]
+    private KeyValueItem? _selectedParam;
+
+    [ObservableProperty]
+    private KeyValueItem? _selectedHeader;
+
+    [ObservableProperty]
     private ApiResponse? _currentResponse;
 
     [ObservableProperty]

@@ -37,7 +37,7 @@ public class HttpRequestService : IHttpRequestService
             // 构建 URL（添加 Query 参数）
             if (request.QueryParams.Count > 0)
             {
-                var queryString = BuildQueryString(request.QueryParams, variables);
+                var queryString = BuildQueryString(request.QueryParams.ToList(), variables);
                 if (!string.IsNullOrEmpty(queryString))
                 {
                     url = url.Contains('?') ? $"{url}&{queryString}" : $"{url}?{queryString}";
@@ -64,7 +64,7 @@ public class HttpRequestService : IHttpRequestService
             if (request.Method != HttpMethodType.GET && request.Method != HttpMethodType.HEAD && request.BodyType != BodyType.None)
             {
                 var body = ReplaceVariables(request.Body, variables ?? new Dictionary<string, string>());
-                var contentType = GetContentType(request.BodyType, request.Headers);
+                var contentType = GetContentType(request.BodyType, request.Headers.ToList());
 
                 if (request.BodyType == BodyType.Binary && !string.IsNullOrEmpty(request.BinaryFilePath))
                 {

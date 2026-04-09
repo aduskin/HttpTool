@@ -200,56 +200,100 @@
                     BorderThickness="0">
                     <!--  Params Tab  -->
                     <AduSkin:AduTabItem Header="Params">
-                        <AduSkin:AduDataGrid
-                            AduAttach:BorderAttach.CornerRadius="0"
-                            AutoGenerateColumns="False"
-                            BorderThickness="0"
-                            CanUserAddRows="False"
-                            GridLinesVisibility="Horizontal"
-                            HeadersVisibility="Column"
-                            ItemsSource="{Binding SelectedApi.QueryParams}">
-                            <AduSkin:AduDataGrid.Columns>
-                                <DataGridCheckBoxColumn
-                                    Width="30"
-                                    Binding="{Binding IsEnabled}"
-                                    Header="" />
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
-                                    Header="Key" />
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
-                                    Header="Value" />
-                            </AduSkin:AduDataGrid.Columns>
-                        </AduSkin:AduDataGrid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="8,8,8,4"
+                                Orientation="Horizontal">
+                                <AduSkin:AduButton Click="AddParam_Click" Content="Add" />
+                                <AduSkin:AduButton
+                                    Margin="8,0,0,0"
+                                    Click="DeleteParam_Click"
+                                    Content="Delete" />
+                            </StackPanel>
+                            <AduSkin:AduDataGrid
+                                Grid.Row="1"
+                                AduAttach:BorderAttach.CornerRadius="0"
+                                AutoGenerateColumns="False"
+                                BorderThickness="0"
+                                CanUserAddRows="False"
+                                HeadersVisibility="Column"
+                                ItemsSource="{Binding SelectedApi.QueryParams}"
+                                SelectedItem="{Binding SelectedParam, Mode=TwoWay}"
+                                SelectionMode="Single">
+                                <AduSkin:AduDataGrid.Columns>
+                                    <AduSkin:AduDataGridCheckBoxColumn
+                                        Width="30"
+                                        Binding="{Binding IsEnabled}"
+                                        Header="" />
+                                    <DataGridTextColumn
+                                        Width="*"
+                                        Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                        EditingElementStyle="{DynamicResource EditTextColumnHorizontalLeft}"
+                                        ElementStyle="{DynamicResource ReadOnlyTextColumnHorizontalLeft}"
+                                        Header="Key" />
+                                    <DataGridTextColumn
+                                        Width="*"
+                                        Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                        EditingElementStyle="{DynamicResource EditTextColumnHorizontalLeft}"
+                                        ElementStyle="{DynamicResource ReadOnlyTextColumnHorizontalLeft}"
+                                        Header="Value" />
+                                </AduSkin:AduDataGrid.Columns>
+                            </AduSkin:AduDataGrid>
+                        </Grid>
                     </AduSkin:AduTabItem>
 
                     <!--  Headers Tab  -->
                     <AduSkin:AduTabItem Header="Headers">
-                        <AduSkin:AduDataGrid
-                            AduAttach:BorderAttach.CornerRadius="0"
-                            AutoGenerateColumns="False"
-                            BorderThickness="0"
-                            CanUserAddRows="False"
-                            GridLinesVisibility="Horizontal"
-                            HeadersVisibility="Column"
-                            ItemsSource="{Binding SelectedApi.Headers}">
-                            <AduSkin:AduDataGrid.Columns>
-                                <AduSkin:AduDataGridCheckBoxColumn
-                                    Width="30"
-                                    Binding="{Binding IsEnabled}"
-                                    Header="" />
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
-                                    Header="Key" />
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
-                                    Header="Value" />
-                            </AduSkin:AduDataGrid.Columns>
-                        </AduSkin:AduDataGrid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="8,8,8,4"
+                                Orientation="Horizontal">
+                                <AduSkin:AduButton Click="AddHeader_Click" Content="Add" />
+                                <AduSkin:AduButton
+                                    Margin="8,0,0,0"
+                                    Click="DeleteHeader_Click"
+                                    Content="Delete" />
+                            </StackPanel>
+                            <AduSkin:AduDataGrid
+                                Grid.Row="1"
+                                AduAttach:BorderAttach.CornerRadius="0"
+                                AutoGenerateColumns="False"
+                                BorderThickness="0"
+                                CanUserAddRows="False"
+                                HeadersVisibility="Column"
+                                ItemsSource="{Binding SelectedApi.Headers}"
+                                SelectedItem="{Binding SelectedHeader, Mode=TwoWay}"
+                                SelectionMode="Single">
+                                <AduSkin:AduDataGrid.Columns>
+                                    <AduSkin:AduDataGridCheckBoxColumn
+                                        Width="30"
+                                        Binding="{Binding IsEnabled}"
+                                        Header="" />
+                                    <DataGridTextColumn
+                                        Width="*"
+                                        Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                        EditingElementStyle="{DynamicResource EditTextColumnHorizontalLeft}"
+                                        ElementStyle="{DynamicResource ReadOnlyTextColumnHorizontalLeft}"
+                                        Header="Key" />
+                                    <DataGridTextColumn
+                                        Width="*"
+                                        Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                        EditingElementStyle="{DynamicResource EditTextColumnHorizontalLeft}"
+                                        ElementStyle="{DynamicResource ReadOnlyTextColumnHorizontalLeft}"
+                                        Header="Value" />
+                                </AduSkin:AduDataGrid.Columns>
+                            </AduSkin:AduDataGrid>
+                        </Grid>
                     </AduSkin:AduTabItem>
 
                     <!--  Body Tab  -->

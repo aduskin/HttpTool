@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using HttpTool.Core.Enums;
+using System.Collections.ObjectModel;
 
 namespace HttpTool.Core.Models;
 
@@ -21,10 +22,10 @@ public partial class ApiRequest : ObservableObject
     private string _url = string.Empty;
 
     [ObservableProperty]
-    private List<KeyValueItem> _headers = new();
+    private ObservableCollection<KeyValueItem> _headers = new();
 
     [ObservableProperty]
-    private List<KeyValueItem> _queryParams = new();
+    private ObservableCollection<KeyValueItem> _queryParams = new();
 
     [ObservableProperty]
     private BodyType _bodyType = BodyType.None;
@@ -69,7 +70,7 @@ public partial class ApiRequest : ObservableObject
     {
         return new ApiRequest
         {
-            Headers = new List<KeyValueItem>
+            Headers = new ObservableCollection<KeyValueItem>
             {
                 new("Content-Type", "application/json")
             }

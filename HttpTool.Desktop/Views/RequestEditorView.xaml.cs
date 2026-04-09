@@ -30,6 +30,40 @@ public partial class RequestEditorView : UserControl
             tab.SelectedApi.BinaryFilePath = dialog.FileName;
         }
     }
+
+    private void AddParam_Click(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is ProjectTabItem tab && tab.SelectedApi != null)
+        {
+            tab.SelectedApi.QueryParams.Add(new KeyValueItem());
+        }
+    }
+
+    private void DeleteParam_Click(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is ProjectTabItem tab && tab.SelectedParam != null)
+        {
+            tab.SelectedApi?.QueryParams.Remove(tab.SelectedParam);
+            tab.SelectedParam = null;
+        }
+    }
+
+    private void AddHeader_Click(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is ProjectTabItem tab && tab.SelectedApi != null)
+        {
+            tab.SelectedApi.Headers.Add(new KeyValueItem());
+        }
+    }
+
+    private void DeleteHeader_Click(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is ProjectTabItem tab && tab.SelectedHeader != null)
+        {
+            tab.SelectedApi?.Headers.Remove(tab.SelectedHeader);
+            tab.SelectedHeader = null;
+        }
+    }
 }
 
 /// <summary>
