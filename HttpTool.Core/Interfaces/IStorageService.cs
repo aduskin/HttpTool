@@ -28,6 +28,11 @@ public interface IStorageService
     Task AddToRecentProjectsAsync(string filePath);
 
     /// <summary>
+    /// 从最近项目中移除
+    /// </summary>
+    Task RemoveFromRecentProjectsAsync(string filePath);
+
+    /// <summary>
     /// 获取应用数据目录
     /// </summary>
     string GetAppDataPath();

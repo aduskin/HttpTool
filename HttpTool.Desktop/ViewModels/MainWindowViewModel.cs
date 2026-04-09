@@ -197,6 +197,7 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task RemoveProjectAsync(RecentProjectItem? recent)
     {
         if (recent == null) return;
+        await _storageService.RemoveFromRecentProjectsAsync(recent.FilePath);
         RecentProjects.Remove(recent);
     }
 

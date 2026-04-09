@@ -109,4 +109,12 @@ public class JsonStorageService : IStorageService
         var json = JsonSerializer.Serialize(recentProjects, _jsonOptions);
         await File.WriteAllTextAsync(_recentProjectsFile, json);
     }
+
+    public async Task RemoveFromRecentProjectsAsync(string filePath)
+    {
+        var recentProjects = await GetRecentProjectsAsync();
+        recentProjects.RemoveAll(p => p.Equals(filePath, StringComparison.OrdinalIgnoreCase));
+        var json = JsonSerializer.Serialize(recentProjects, _jsonOptions);
+        await File.WriteAllTextAsync(_recentProjectsFile, json);
+    }
 }
