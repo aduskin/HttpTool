@@ -45,7 +45,7 @@
                             Width="200"
                             Text="{Binding SelectedApi.Name, UpdateSourceTrigger=PropertyChanged}" />
                     </AduSkin:AduFormBox>
-                    <AduSkin:AduButton Command="{Binding DataContext.NewApiCommand, RelativeSource={RelativeSource AncestorType=Window}}" Content="New Request" />
+                    <AduSkin:AduButton Command="{Binding NewApiCommand}" Content="New Request" />
                 </StackPanel>
             </Grid>
         </Border>
@@ -108,7 +108,7 @@
                                 VerticalAlignment="Center"
                                 AduAttach:PathDataAttach.PathData="{DynamicResource Icon_SystemClose}"
                                 AduAttach:PathDataAttach.Width="8"
-                                Command="{Binding DataContext.DeleteApiCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                Command="{Binding DeleteApiCommand}"
                                 CommandParameter="{Binding}"
                                 Visibility="Collapsed" />
                         </Grid>
@@ -130,12 +130,12 @@
             <Grid Grid.Column="2" Visibility="{Binding SelectedApi, Converter={StaticResource NullToCollapsedConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition
                         Height="Auto"
                         MinHeight="100"
-                        MaxHeight="300" />
+                        MaxHeight="500" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <!--  URL Bar  -->
@@ -183,7 +183,7 @@
                             Margin="8,0,0,0"
                             Background="{DynamicResource PrimaryBrush}"
                             BorderThickness="1"
-                            Command="{Binding DataContext.SendRequestCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            Command="{Binding SendRequestCommand}"
                             CommandParameter="{Binding SelectedApi}">
                             <Path
                                 Width="16"
@@ -490,7 +490,7 @@
 
                 <AduSkin:AduGridSplitter Grid.Row="2" ResizeDirection="Rows" />
                 <!--  Response Section  -->
-                <Grid Grid.Row="3" MaxHeight="300">
+                <Grid Grid.Row="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />

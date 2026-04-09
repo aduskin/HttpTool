@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
 
         // 注册 ViewModels
         services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<IRequestEditorViewModelFactory, RequestEditorViewModelFactory>();
 
         return services;
     }

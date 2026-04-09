@@ -10,7 +10,7 @@ using System.Windows;
 namespace HttpTool.Desktop.ViewModels;
 
 /// <summary>
-/// 打开的项目标签页
+/// 打开的项目标签页（项目级别管理）
 /// </summary>
 public partial class ProjectTabItem : ObservableObject
 {
@@ -27,16 +27,7 @@ public partial class ProjectTabItem : ObservableObject
     private ApiRequest? _selectedApi;
 
     [ObservableProperty]
-    private KeyValueItem? _selectedParam;
-
-    [ObservableProperty]
-    private KeyValueItem? _selectedHeader;
-
-    [ObservableProperty]
-    private ApiResponse? _currentResponse;
-
-    [ObservableProperty]
-    private bool _isLoading;
+    private RequestEditorViewModel? _editorViewModel;
 
     public string ProjectId => Project?.Id ?? string.Empty;
 }
@@ -47,10 +38,9 @@ public partial class ProjectTabItem : ObservableObject
 public partial class MainWindowViewModel : ObservableObject
 {
     private readonly IProjectService _projectService;
-    private readonly IHttpRequestService _httpRequestService;
     private readonly IHistoryService _historyService;
-    private readonly IFormatterService _formatterService;
     private readonly IStorageService _storageService;
+    private readonly IRequestEditorViewModelFactory _editorViewModelFactory;
 
     [ObservableProperty]
     private ObservableCollection<ProjectTabItem> _projectTabs = new();
@@ -69,16 +59,14 @@ public partial class MainWindowViewModel : ObservableObject
 
     public MainWindowViewModel(
         IProjectService projectService,
-        IHttpRequestService httpRequestService,
         IHistoryService historyService,
-        IFormatterService formatterService,
-        IStorageService storageService)
+        IStorageService storageService,
+        IRequestEditorViewModelFactory editorViewModelFactory)
     {
         _projectService = projectService;
-        _httpRequestService = httpRequestService;
         _historyService = historyService;
-        _formatterService = formatterService;
         _storageService = storageService;
+        _editorViewModelFactory = editorViewModelFactory;
 
         _projectService.ProjectChanged += OnProjectChanged;
         _historyService.HistoryAdded += OnHistoryAdded;
@@ -120,12 +108,7 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task NewProjectAsync()
     {
         var project = _projectService.CreateProject();
-        var tab = new ProjectTabItem
-        {
-            Title = project.Name,
-            Project = project,
-            Apis = new ObservableCollection<ApiRequest>(project.Apis)
-        };
+        var tab = CreateProjectTabItem(project);
         ProjectTabs.Add(tab);
         SelectedTab = tab;
 
@@ -157,13 +140,6 @@ public partial class MainWindowViewModel : ObservableObject
         var project = await _projectService.OpenProjectAsync(filePath);
         if (project != null)
         {
-            var tab = new ProjectTabItem
-            {
-                Title = project.Name,
-                Project = project,
-                Apis = new ObservableCollection<ApiRequest>(project.Apis)
-            };
-
             // 检查是否已打开
             var existingTab = ProjectTabs.FirstOrDefault(t => t.ProjectId == project.Id);
             if (existingTab != null)
@@ -172,6 +148,7 @@ public partial class MainWindowViewModel : ObservableObject
             }
             else
             {
+                var tab = CreateProjectTabItem(project);
                 ProjectTabs.Add(tab);
                 SelectedTab = tab;
             }
@@ -180,6 +157,19 @@ public partial class MainWindowViewModel : ObservableObject
             await _storageService.AddToRecentProjectsAsync(filePath);
             LoadRecentProjectsAsync();
         }
+    }
+
+    private ProjectTabItem CreateProjectTabItem(Project project)
+    {
+        var editorViewModel = _editorViewModelFactory.Create(project);
+        return new ProjectTabItem
+        {
+            Title = project.Name,
+            Project = project,
+            Apis = editorViewModel.Apis,
+            SelectedApi = editorViewModel.SelectedApi,
+            EditorViewModel = editorViewModel
+        };
     }
 
     [RelayCommand]
@@ -268,64 +258,24 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private void NewApi()
     {
-        if (SelectedTab == null)
-            return;
-
-        var api = ApiRequest.CreateDefault();
-        SelectedTab.Apis.Add(api);
-        SelectedTab.SelectedApi = api;
+        SelectedTab?.EditorViewModel?.NewApiCommand.Execute(null);
     }
 
     [RelayCommand]
     private void DeleteApi(ApiRequest? api)
     {
-        if (SelectedTab == null || api == null)
-            return;
-
-        SelectedTab.Apis.Remove(api);
-        if (SelectedTab.SelectedApi == api)
+        if (api != null)
         {
-            SelectedTab.SelectedApi = SelectedTab.Apis.FirstOrDefault();
+            SelectedTab?.EditorViewModel?.DeleteApiCommand.Execute(api);
         }
     }
 
     [RelayCommand]
     private async Task SendRequestAsync(ApiRequest? api)
     {
-        if (api == null || SelectedTab == null)
-            return;
-
-        SelectedTab.IsLoading = true;
-        SelectedTab.CurrentResponse = null;
-
-        try
+        if (SelectedTab?.EditorViewModel != null)
         {
-            var variables = SelectedTab.Project?.Environment?.Variables
-                .Where(v => v.IsEnabled)
-                .ToDictionary(v => v.Key, v => v.Value);
-
-            var response = await _httpRequestService.SendRequestAsync(api, variables);
-
-            // 格式化响应内容
-            response.Body = _formatterService.Format(response.Body, response.ContentType);
-
-            SelectedTab.CurrentResponse = response;
-
-            // 添加到历史
-            await _historyService.AddHistoryAsync(new RequestHistory
-            {
-                ProjectId = SelectedTab.Project?.Id ?? string.Empty,
-                ApiName = api.Name,
-                Method = api.Method,
-                Url = api.Url,
-                StatusCode = response.StatusCode,
-                Elapsed = response.Elapsed,
-                IsSuccess = response.IsSuccess
-            });
-        }
-        finally
-        {
-            SelectedTab.IsLoading = false;
+            await SelectedTab.EditorViewModel.SendRequestCommand.ExecuteAsync(api);
         }
     }
 

@@ -230,7 +230,7 @@
                         </AduSkin:AduTabControl.ItemTemplate>
                         <AduSkin:AduTabControl.ContentTemplate>
                             <DataTemplate>
-                                <views:RequestEditorView DataContext="{Binding}" />
+                                <views:RequestEditorView DataContext="{Binding EditorViewModel}" />
                             </DataTemplate>
                         </AduSkin:AduTabControl.ContentTemplate>
                     </AduSkin:AduTabControl>
