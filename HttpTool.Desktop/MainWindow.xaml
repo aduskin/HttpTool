@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:AduAttach="clr-namespace:AduSkin.AdditionalAttributes;assembly=AduSkin"
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
+    xmlns:Interactivity="clr-namespace:AduSkin.Interactivity;assembly=AduSkin"
     xmlns:views="clr-namespace:HttpTool.Desktop.Views"
     Title="HttpTool"
     Width="1100"
@@ -85,6 +86,14 @@
             <AduSkin:AduTitleMenuItem Header="_View">
                 <AduSkin:AduMenuItem Click="ViewHistory_Click" Header="_History" />
                 <AduSkin:AduMenuItem Click="ViewEnvironment_Click" Header="_Environment Variables" />
+            </AduSkin:AduTitleMenuItem>
+            <AduSkin:AduTitleMenuItem Header="_Help">
+                <AduSkin:AduMenuItem Click="About_Click" Header="_About" />
+                <Separator />
+                <AduSkin:AduMenuItem
+                    Command="Interactivity:ControlCommands.OpenLink"
+                    CommandParameter="https://github.com/aduskin/HttpTool"
+                    Header="_Visit Website" />
             </AduSkin:AduTitleMenuItem>
         </AduSkin:AduTitleMenu>
     </AduSkin:AduWindow.Menu>

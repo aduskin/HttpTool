@@ -1,0 +1,85 @@
+<AduSkin:AduWindow
+    x:Class="HttpTool.Desktop.Views.AboutWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
+    xmlns:Interactivity="clr-namespace:AduSkin.Interactivity;assembly=AduSkin"
+    Title="About HttpTool"
+    Width="400"
+    Height="300"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="ToolWindow">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Logo / Icon area  -->
+        <Border
+            Grid.Row="0"
+            Width="64"
+            Height="64"
+            Margin="0,0,0,15"
+            HorizontalAlignment="Center"
+            Background="{DynamicResource PrimaryBrush}"
+            CornerRadius="8">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="28"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="HT" />
+        </Border>
+
+        <!--  App Name  -->
+        <TextBlock
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            FontSize="24"
+            FontWeight="Bold"
+            Text="HttpTool" />
+
+        <!--  Version  -->
+        <TextBlock
+            Grid.Row="2"
+            Margin="0,8,0,0"
+            HorizontalAlignment="Center"
+            Foreground="Gray"
+            Text="Version 1.0.0" />
+
+        <!--  Description  -->
+        <TextBlock
+            Grid.Row="3"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Center"
+            TextAlignment="Center"
+            TextWrapping="Wrap">
+            A powerful HTTP request debugging tool built with WPF.
+        </TextBlock>
+
+        <AduSkin:AduButton
+            Grid.Row="4"
+            Width="Auto"
+            Height="Auto"
+            Margin="0,10,0,0"
+            BorderThickness="0"
+            Command="Interactivity:ControlCommands.OpenLink"
+            CommandParameter="https://github.com/aduskin"
+            Foreground="{DynamicResource PrimaryBrush}">
+            <StackPanel>
+                <TextBlock
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Text="AduSkin"
+                    TextAlignment="Center" />
+                <TextBlock Text="追求极致，永臻完美" TextAlignment="Center" />
+            </StackPanel>
+        </AduSkin:AduButton>
+    </Grid>
+</AduSkin:AduWindow>

@@ -191,6 +191,13 @@ public partial class MainWindow : AduWindow
         wsWindow.Show();
     }
 
+    private void About_Click(object sender, RoutedEventArgs e)
+    {
+        var aboutWindow = new AboutWindow();
+        aboutWindow.Owner = this;
+        aboutWindow.ShowDialog();
+    }
+
     private void ProjectTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
         if (DataContext is MainWindowViewModel vm && e.NewValue is ProjectTabItem tab)
