@@ -28,12 +28,14 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
+                <AduSkin:AduFormBox Header="Project">
                     <AduSkin:AduEditableTextBlock
+                        Width="Auto"
                         VerticalAlignment="Center"
-                        FontSize="12"
+                        FontSize="14"
+                        Foreground="{DynamicResource PrimaryBrush}"
                         Text="{Binding Title}" />
-                </StackPanel>
+                </AduSkin:AduFormBox>
 
                 <!--  Request Name  -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
