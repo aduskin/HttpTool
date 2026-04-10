@@ -6,11 +6,15 @@
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="Environment Variables"
     Width="600"
     Height="450"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+    <AduSkin:AduWindow.DataContext>
+        <vm:EnvironmentWindowViewModel />
+    </AduSkin:AduWindow.DataContext>
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -59,13 +63,17 @@
             Orientation="Horizontal">
             <AduSkin:AduButton
                 Margin="0,0,8,0"
-                Click="Add_Click"
+                Command="{Binding AddCommand}"
                 Content="Add Variable" />
             <AduSkin:AduButton
                 Margin="0,0,8,0"
-                Click="Save_Click"
+                Command="{Binding SaveCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=AduSkin:AduWindow}}"
                 Content="Save" />
-            <AduSkin:AduButton Click="Close_Click" Content="Close" />
+            <AduSkin:AduButton
+                Command="{Binding CloseCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=AduSkin:AduWindow}}"
+                Content="Close" />
         </StackPanel>
     </Grid>
 </AduSkin:AduWindow>

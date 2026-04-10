@@ -132,12 +132,14 @@ public partial class RequestEditorViewModel : ObservableObject
         }
     }
 
-    public void AddParam()
+    [RelayCommand]
+    private void AddParam()
     {
         SelectedApi?.QueryParams.Add(new KeyValueItem());
     }
 
-    public void DeleteParam()
+    [RelayCommand]
+    private void DeleteParam()
     {
         if (SelectedParam != null)
         {
@@ -146,17 +148,34 @@ public partial class RequestEditorViewModel : ObservableObject
         }
     }
 
-    public void AddHeader()
+    [RelayCommand]
+    private void AddHeader()
     {
         SelectedApi?.Headers.Add(new KeyValueItem());
     }
 
-    public void DeleteHeader()
+    [RelayCommand]
+    private void DeleteHeader()
     {
         if (SelectedHeader != null)
         {
             SelectedApi?.Headers.Remove(SelectedHeader);
             SelectedHeader = null;
+        }
+    }
+
+    [RelayCommand]
+    private void BrowseBinaryFile()
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Filter = "All Files (*.*)|*.*",
+            Title = "Select File to Upload"
+        };
+
+        if (dialog.ShowDialog() == true && SelectedApi != null)
+        {
+            SelectedApi.BinaryFilePath = dialog.FileName;
         }
     }
 }

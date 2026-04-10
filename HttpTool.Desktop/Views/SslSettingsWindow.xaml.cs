@@ -1,7 +1,8 @@
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows;
 using AduSkin.Controls;
-using Microsoft.Win32;
+using HttpTool.Desktop.ViewModels;
 
 namespace HttpTool.Desktop.Views;
 
@@ -13,7 +14,6 @@ public partial class SslSettingsWindow : AduWindow
     public bool VerifySsl { get; private set; } = true;
     public string CertificatePath { get; private set; } = "";
     public string CertificatePassword { get; private set; } = "";
-
     public X509Certificate2? Certificate { get; private set; }
 
     public SslSettingsWindow()
@@ -23,62 +23,43 @@ public partial class SslSettingsWindow : AduWindow
 
     public SslSettingsWindow(bool verifySsl, string certPath, string certPassword) : this()
     {
-        VerifySslCheckBox.IsChecked = verifySsl;
-        CertificatePathTextBox.Text = certPath;
-        CertificatePasswordTextBox.Text = certPassword;
-
-        if (!string.IsNullOrEmpty(certPath) && File.Exists(certPath))
+        if (DataContext is SslSettingsWindowViewModel vm)
         {
-            try
+            vm.VerifySsl = verifySsl;
+            vm.CertificatePath = certPath;
+            vm.CertificatePassword = certPassword;
+
+            if (!string.IsNullOrEmpty(certPath) && File.Exists(certPath))
             {
-                Certificate = new X509Certificate2(certPath, certPassword);
-            }
-            catch
-            {
-                // 无法加载证书
+                try
+                {
+                    Certificate = new X509Certificate2(certPath, certPassword);
+                }
+                catch
+                {
+                    // 无法加载证书
+                }
             }
         }
     }
 
-    private void BrowseCertificate_Click(object sender, System.Windows.RoutedEventArgs e)
+    private void Save_Click(object sender, RoutedEventArgs e)
     {
-        var dialog = new OpenFileDialog
+        if (DataContext is SslSettingsWindowViewModel vm)
         {
-            Filter = "Certificate Files (*.pfx;*.p12)|*.pfx;*.p12|All Files (*.*)|*.*",
-            Title = "Select Certificate File"
-        };
+            VerifySsl = vm.VerifySsl;
+            CertificatePath = vm.CertificatePath;
+            CertificatePassword = vm.CertificatePassword;
+            Certificate = vm.Certificate;
 
-        if (dialog.ShowDialog() == true)
-        {
-            CertificatePathTextBox.Text = dialog.FileName;
-        }
-    }
-
-    private void Save_Click(object sender, System.Windows.RoutedEventArgs e)
-    {
-        VerifySsl = VerifySslCheckBox.IsChecked ?? true;
-        CertificatePath = CertificatePathTextBox.Text;
-        CertificatePassword = CertificatePasswordTextBox.Text;
-
-        if (!string.IsNullOrEmpty(CertificatePath) && File.Exists(CertificatePath))
-        {
-            try
+            if (!vm.ValidateAndSave(this))
             {
-                Certificate = new X509Certificate2(CertificatePath, CertificatePassword);
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"Failed to load certificate: {ex.Message}", "Error",
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
             }
         }
-
-        DialogResult = true;
-        Close();
     }
 
-    private void Close_Click(object sender, System.Windows.RoutedEventArgs e)
+    private void Close_Click(object sender, RoutedEventArgs e)
     {
         DialogResult = false;
         Close();

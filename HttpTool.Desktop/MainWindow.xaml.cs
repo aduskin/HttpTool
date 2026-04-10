@@ -59,9 +59,9 @@ public partial class MainWindow : AduWindow
         var envWindow = new EnvironmentWindow(vm.SelectedTab.Project.Environment.Variables);
         envWindow.Owner = this;
 
-        if (envWindow.ShowDialog() == true)
+        if (envWindow.ShowDialog() == true && envWindow.DataContext is ViewModels.EnvironmentWindowViewModel envVm)
         {
-            vm.SelectedTab.Project.Environment.Variables = envWindow.Variables.ToList();
+            vm.SelectedTab.Project.Environment.Variables = envVm.Variables.ToList();
         }
     }
 

@@ -206,10 +206,10 @@
                                 Grid.Row="0"
                                 Margin="8"
                                 Orientation="Horizontal">
-                                <AduSkin:AduButton Click="AddParam_Click" Content="Add" />
+                                <AduSkin:AduButton Command="{Binding AddParamCommand}" Content="Add" />
                                 <AduSkin:AduButton
                                     Margin="8,0,0,0"
-                                    Click="DeleteParam_Click"
+                                    Command="{Binding DeleteParamCommand}"
                                     Content="Delete" />
                             </StackPanel>
                             <AduSkin:AduDataGrid
@@ -255,10 +255,10 @@
                                 Grid.Row="0"
                                 Margin="8"
                                 Orientation="Horizontal">
-                                <AduSkin:AduButton Click="AddHeader_Click" Content="Add" />
+                                <AduSkin:AduButton Command="{Binding AddHeaderCommand}" Content="Add" />
                                 <AduSkin:AduButton
                                     Margin="8,0,0,0"
-                                    Click="DeleteHeader_Click"
+                                    Command="{Binding DeleteHeaderCommand}"
                                     Content="Delete" />
                             </StackPanel>
                             <AduSkin:AduDataGrid
@@ -359,7 +359,7 @@
                                         Text="{Binding SelectedApi.BinaryFilePath}" />
                                     <AduSkin:AduButton
                                         Margin="8,0,0,0"
-                                        Click="BrowseBinaryFile_Click"
+                                        Command="{Binding BrowseBinaryFileCommand}"
                                         Content="Browse..." />
                                 </StackPanel>
                             </StackPanel>

@@ -6,11 +6,15 @@
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="SSL/TLS Settings"
     Width="500"
     Height="350"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+    <AduSkin:AduWindow.DataContext>
+        <vm:SslSettingsWindowViewModel />
+    </AduSkin:AduWindow.DataContext>
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -29,9 +33,9 @@
         <StackPanel Grid.Row="1" Margin="0,16,0,0">
             <!--  Certificate Validation  -->
             <AduSkin:AduCheckBox
-                x:Name="VerifySslCheckBox"
                 Margin="0,0,0,16"
-                Content="Verify SSL/TLS Certificates" />
+                Content="Verify SSL/TLS Certificates"
+                IsChecked="{Binding VerifySsl}" />
 
             <!--  Client Certificate  -->
             <TextBlock
@@ -52,21 +56,21 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <AduSkin:AduTextBox x:Name="CertificatePathTextBox" IsReadOnly="True" />
+                <AduSkin:AduTextBox IsReadOnly="True" Text="{Binding CertificatePath}" />
                 <AduSkin:AduButton
                     Grid.Column="1"
                     Margin="8,0,0,0"
-                    Click="BrowseCertificate_Click"
+                    Command="{Binding BrowseCertificateCommand}"
                     Content="Browse" />
             </Grid>
 
             <!--  Certificate Password  -->
             <TextBlock Margin="0,0,0,4" Text="Certificate Password" />
             <AduSkin:AduTextBox
-                x:Name="CertificatePasswordTextBox"
                 Width="200"
                 Margin="0,0,0,8"
-                HorizontalAlignment="Left" />
+                HorizontalAlignment="Left"
+                Text="{Binding CertificatePassword, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Info  -->
             <Border
@@ -97,7 +101,9 @@
                 Margin="0,0,8,0"
                 Click="Save_Click"
                 Content="Save" />
-            <AduSkin:AduButton Click="Close_Click" Content="Cancel" />
+            <AduSkin:AduButton
+                Click="Close_Click"
+                Content="Cancel" />
         </StackPanel>
     </Grid>
 </AduSkin:AduWindow>

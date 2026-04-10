@@ -6,11 +6,15 @@
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="Cookie Manager"
     Width="700"
     Height="450"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+    <AduSkin:AduWindow.DataContext>
+        <vm:CookieManagerWindowViewModel />
+    </AduSkin:AduWindow.DataContext>
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -29,12 +33,12 @@
         <AduSkin:AduDataGrid
             Grid.Row="1"
             Margin="0,12,0,0"
-            x:Name="CookieGrid"
             AutoGenerateColumns="False"
             BorderThickness="1"
             CanUserAddRows="False"
             GridLinesVisibility="Horizontal"
-            HeadersVisibility="Column">
+            HeadersVisibility="Column"
+            ItemsSource="{Binding Cookies}">
             <AduSkin:AduDataGrid.Columns>
                 <DataGridTextColumn
                     Width="150"
@@ -67,9 +71,12 @@
             Orientation="Horizontal">
             <AduSkin:AduButton
                 Margin="0,0,8,0"
-                Click="ClearAll_Click"
+                Command="{Binding ClearAllCommand}"
                 Content="Clear All" />
-            <AduSkin:AduButton Click="Close_Click" Content="Close" />
+            <AduSkin:AduButton
+                Command="{Binding CloseCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=AduSkin:AduWindow}}"
+                Content="Close" />
         </StackPanel>
     </Grid>
 </AduSkin:AduWindow>

@@ -6,6 +6,7 @@
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="Request History"
     Width="700"
     Height="500"
@@ -23,7 +24,8 @@
             Margin="10"
             AutoGenerateColumns="False"
             HeadersVisibility="Column"
-            IsReadOnly="True">
+            IsReadOnly="True"
+            ItemsSource="{Binding History}">
             <AduSkin:AduDataGrid.Columns>
                 <DataGridTextColumn
                     Width="150"
@@ -55,9 +57,12 @@
             Orientation="Horizontal">
             <AduSkin:AduButton
                 Margin="0,0,8,0"
-                Click="ClearHistory_Click"
+                Command="{Binding ClearHistoryCommand}"
                 Content="Clear History" />
-            <AduSkin:AduButton Click="Close_Click" Content="Close" />
+            <AduSkin:AduButton
+                Command="{Binding CloseCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=AduSkin:AduWindow}}"
+                Content="Close" />
         </StackPanel>
     </Grid>
 </AduSkin:AduWindow>

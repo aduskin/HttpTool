@@ -4,6 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:AduAttach="clr-namespace:AduSkin.AdditionalAttributes;assembly=AduSkin"
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:HttpTool.Desktop.Views"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="WebSocket / SSE"
     Width="800"
     Height="600"
@@ -13,7 +17,9 @@
     AduAttach:HeaderAttach.FontSize="14"
     AduAttach:HeaderAttach.Foreground="{DynamicResource NormalForeground}"
     AduAttach:HeaderAttach.Height="40"
-    WindowStartupLocation="CenterOwner">
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d"
+    Closed="Window_Closed">
     <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -30,29 +36,27 @@
             </Grid.ColumnDefinitions>
 
             <AduSkin:AduTextBox
-                x:Name="UrlTextBox"
                 Grid.Column="0"
                 Margin="0,0,8,0"
-                Text="ws://localhost:8080" />
+                IsEnabled="{Binding IsUrlEnabled}"
+                Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />
 
             <AduSkin:AduButton
-                x:Name="ConnectButton"
                 Grid.Column="1"
                 Margin="0,0,8,0"
-                Click="Connect_Click"
-                Content="Connect" />
+                Command="{Binding ConnectCommand}"
+                Content="Connect"
+                IsEnabled="{Binding IsConnectEnabled}" />
 
             <AduSkin:AduButton
-                x:Name="DisconnectButton"
                 Grid.Column="2"
-                Click="Disconnect_Click"
+                Command="{Binding DisconnectCommand}"
                 Content="Disconnect"
-                IsEnabled="False" />
+                IsEnabled="{Binding IsDisconnectEnabled}" />
         </Grid>
 
         <!--  Messages  -->
         <AduSkin:AduTextBox
-            x:Name="MessagesTextBox"
             Grid.Row="1"
             Height="Auto"
             VerticalAlignment="Stretch"
@@ -61,7 +65,8 @@
             FontSize="12"
             HorizontalScrollBarVisibility="Auto"
             IsReadOnly="True"
-            VerticalScrollBarVisibility="Auto" />
+            VerticalScrollBarVisibility="Auto"
+            Text="{Binding MessagesText, Mode=OneWay}" />
 
         <!--  Send Message  -->
         <Grid Grid.Row="2" Margin="0,12,0,0">
@@ -71,14 +76,13 @@
             </Grid.ColumnDefinitions>
 
             <AduSkin:AduTextBox
-                x:Name="MessageTextBox"
                 Grid.Column="0"
                 Margin="0,0,8,0"
-                KeyDown="MessageTextBox_KeyDown" />
+                Text="{Binding MessageText, UpdateSourceTrigger=PropertyChanged}" />
 
             <AduSkin:AduButton
                 Grid.Column="1"
-                Click="Send_Click"
+                Command="{Binding SendCommand}"
                 Content="Send" />
         </Grid>
     </Grid>

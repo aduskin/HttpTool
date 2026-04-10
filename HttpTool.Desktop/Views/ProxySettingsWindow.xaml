@@ -6,11 +6,15 @@
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="Proxy Settings"
     Width="500"
     SizeToContent="Height"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+    <AduSkin:AduWindow.DataContext>
+        <vm:ProxySettingsWindowViewModel />
+    </AduSkin:AduWindow.DataContext>
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -29,53 +33,50 @@
         <StackPanel Grid.Row="1" Margin="0,16,0,0">
             <!--  Enable Proxy  -->
             <AduSkin:AduCheckBox
-                x:Name="EnableProxyCheckBox"
                 Margin="0,0,0,16"
-                Content="Enable Proxy" />
+                Content="Enable Proxy"
+                IsChecked="{Binding ProxyEnabled}" />
 
             <!--  Proxy Type  -->
             <TextBlock Margin="0,0,0,4" Text="Proxy Type" />
             <AduSkin:AduComboBox
-                x:Name="ProxyTypeComboBox"
                 Width="200"
                 Margin="0,0,0,16"
-                HorizontalAlignment="Left">
-                <ComboBoxItem Content="HTTP" IsSelected="True" />
-                <ComboBoxItem Content="HTTPS" />
-                <ComboBoxItem Content="SOCKS5" />
-            </AduSkin:AduComboBox>
+                HorizontalAlignment="Left"
+                ItemsSource="{Binding ProxyTypes}"
+                SelectedItem="{Binding ProxyType}" />
 
             <!--  Proxy Host  -->
             <TextBlock Margin="0,0,0,4" Text="Proxy Host" />
             <AduSkin:AduTextBox
-                x:Name="ProxyHostTextBox"
                 Width="300"
                 Margin="0,0,0,8"
-                HorizontalAlignment="Left" />
+                HorizontalAlignment="Left"
+                Text="{Binding ProxyHost, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Proxy Port  -->
             <TextBlock Margin="0,0,0,4" Text="Proxy Port" />
             <AduSkin:AduTextBox
-                x:Name="ProxyPortTextBox"
                 Width="100"
                 Margin="0,0,0,8"
-                HorizontalAlignment="Left" />
+                HorizontalAlignment="Left"
+                Text="{Binding ProxyPort, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Username  -->
             <TextBlock Margin="0,0,0,4" Text="Username (Optional)" />
             <AduSkin:AduTextBox
-                x:Name="ProxyUsernameTextBox"
                 Width="200"
                 Margin="0,0,0,8"
-                HorizontalAlignment="Left" />
+                HorizontalAlignment="Left"
+                Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Password  -->
             <TextBlock Margin="0,0,0,4" Text="Password (Optional)" />
             <AduSkin:AduTextBox
-                x:Name="ProxyPasswordTextBox"
                 Width="200"
                 Margin="0,0,0,8"
-                HorizontalAlignment="Left" />
+                HorizontalAlignment="Left"
+                Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <!--  Buttons  -->
@@ -87,7 +88,9 @@
                 Margin="0,0,8,0"
                 Click="Save_Click"
                 Content="Save" />
-            <AduSkin:AduButton Click="Close_Click" Content="Cancel" />
+            <AduSkin:AduButton
+                Click="Close_Click"
+                Content="Cancel" />
         </StackPanel>
     </Grid>
 </AduSkin:AduWindow>

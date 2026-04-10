@@ -4,6 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:AduAttach="clr-namespace:AduSkin.AdditionalAttributes;assembly=AduSkin"
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="Generate Code"
     Width="700"
     Height="500"
@@ -14,7 +17,8 @@
     AduAttach:HeaderAttach.Foreground="{DynamicResource NormalForeground}"
     AduAttach:HeaderAttach.Height="40"
     AduAttach:HeaderAttach.IconWidth="20"
-    WindowStartupLocation="CenterOwner">
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
     <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -26,14 +30,13 @@
         <StackPanel Grid.Row="0" Margin="0,0,0,12">
             <TextBlock Margin="0,0,0,8" Text="Select Language:" />
             <AduSkin:AduComboBox
-                x:Name="LanguageComboBox"
                 DisplayMemberPath="DisplayName"
-                SelectionChanged="LanguageComboBox_SelectionChanged" />
+                ItemsSource="{Binding SupportedLanguages}"
+                SelectedItem="{Binding SelectedLanguage}" />
         </StackPanel>
 
         <!--  Code Display  -->
         <AduSkin:AduTextBox
-            x:Name="CodeTextBox"
             Grid.Row="1"
             Height="Auto"
             Padding="4"
@@ -44,6 +47,7 @@
             FontSize="12"
             HorizontalScrollBarVisibility="Auto"
             IsReadOnly="True"
+            Text="{Binding GeneratedCode, Mode=OneWay}"
             VerticalScrollBarVisibility="Auto" />
 
         <!--  Buttons  -->
@@ -53,14 +57,14 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <AduSkin:AduButton
-                x:Name="CopyButton"
                 Width="80"
                 Margin="0,0,8,0"
-                Click="Copy_Click"
+                Command="{Binding CopyCommand}"
                 Content="Copy" />
             <AduSkin:AduButton
                 Width="80"
-                Click="Close_Click"
+                Command="{Binding CloseCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=AduSkin:AduWindow}}"
                 Content="Close" />
         </StackPanel>
     </Grid>

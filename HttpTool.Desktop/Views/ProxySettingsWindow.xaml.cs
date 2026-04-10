@@ -1,4 +1,6 @@
+using System.Windows;
 using AduSkin.Controls;
+using HttpTool.Desktop.ViewModels;
 
 namespace HttpTool.Desktop.Views;
 
@@ -21,33 +23,34 @@ public partial class ProxySettingsWindow : AduWindow
 
     public ProxySettingsWindow(bool isEnabled, string proxyType, string host, int port, string username, string password) : this()
     {
-        EnableProxyCheckBox.IsChecked = isEnabled;
-        ProxyTypeComboBox.SelectedIndex = proxyType.ToUpper() switch
+        if (DataContext is ProxySettingsWindowViewModel vm)
         {
-            "HTTPS" => 1,
-            "SOCKS5" => 2,
-            _ => 0
-        };
-        ProxyHostTextBox.Text = host;
-        ProxyPortTextBox.Text = port > 0 ? port.ToString() : "";
-        ProxyUsernameTextBox.Text = username;
-        ProxyPasswordTextBox.Text = password;
+            vm.ProxyEnabled = isEnabled;
+            vm.ProxyType = proxyType;
+            vm.ProxyHost = host;
+            vm.ProxyPort = port > 0 ? port.ToString() : "";
+            vm.Username = username;
+            vm.Password = password;
+        }
     }
 
-    private void Save_Click(object sender, System.Windows.RoutedEventArgs e)
+    private void Save_Click(object sender, RoutedEventArgs e)
     {
-        ProxyEnabled = EnableProxyCheckBox.IsChecked ?? false;
-        ProxyType = (ProxyTypeComboBox.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "HTTP";
-        ProxyHost = ProxyHostTextBox.Text;
-        ProxyPort = int.TryParse(ProxyPortTextBox.Text, out var port) ? port : 0;
-        Username = ProxyUsernameTextBox.Text;
-        Password = ProxyPasswordTextBox.Text;
+        if (DataContext is ProxySettingsWindowViewModel vm)
+        {
+            ProxyEnabled = vm.ProxyEnabled;
+            ProxyType = vm.ProxyType;
+            ProxyHost = vm.ProxyHost;
+            ProxyPort = vm.ProxyPortValue;
+            Username = vm.Username;
+            Password = vm.Password;
 
-        DialogResult = true;
-        Close();
+            DialogResult = true;
+            Close();
+        }
     }
 
-    private void Close_Click(object sender, System.Windows.RoutedEventArgs e)
+    private void Close_Click(object sender, RoutedEventArgs e)
     {
         DialogResult = false;
         Close();
