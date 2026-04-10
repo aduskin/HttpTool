@@ -1,0 +1,8 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrl="clr-namespace:HttpTool.Desktop.Controls">
+
+    <!-- TrendChart 使用 OnRender 自行绘制，不需要默认模板内容 -->
+
+</ResourceDictionary>

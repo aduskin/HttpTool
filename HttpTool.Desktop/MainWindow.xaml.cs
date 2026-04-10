@@ -183,6 +183,28 @@ public partial class MainWindow : AduWindow
         }
     }
 
+    private void StressTest_Click(object sender, RoutedEventArgs e)
+    {
+        var vm = DataContext as MainWindowViewModel;
+        if (vm?.SelectedTab?.SelectedApi == null)
+        {
+            System.Windows.MessageBox.Show("Please select an API request first.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        var variables = vm.SelectedTab.Project?.Environment?.Variables
+            .Where(v => v.IsEnabled)
+            .ToDictionary(v => v.Key, v => v.Value);
+
+        var httpRequestService = App.Services.GetRequiredService<IHttpRequestService>();
+        var stressTestVm = new StressTestViewModel(vm.SelectedTab.SelectedApi, variables, httpRequestService, vm.SelectedTab.Project);
+        var stressTestWindow = new StressTestWindow(stressTestVm)
+        {
+            Owner = this
+        };
+        stressTestWindow.ShowDialog();
+    }
+
     private void WebSocket_Click(object sender, RoutedEventArgs e)
     {
         var wsWindow = new WebSocketWindow();

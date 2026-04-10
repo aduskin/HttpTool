@@ -12,6 +12,7 @@
                 <AduSkin:AduSkinTheme ThemeType="Light" />
                 <ResourceDictionary Source="pack://application:,,,/AduSkin;component/Themes/Converters.xaml" />
                 <ResourceDictionary Source="Themes/Default.xaml" />
+                <ResourceDictionary Source="Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

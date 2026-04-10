@@ -81,6 +81,7 @@
                 <AduSkin:AduMenuItem Click="ProxySettings_Click" Header="_Proxy Settings" />
                 <AduSkin:AduMenuItem Click="SslSettings_Click" Header="_SSL/TLS Settings" />
                 <Separator />
+                <AduSkin:AduMenuItem Click="StressTest_Click" Header="_Stress Test" />
                 <AduSkin:AduMenuItem Click="WebSocket_Click" Header="_WebSocket / SSE" />
             </AduSkin:AduTitleMenuItem>
             <AduSkin:AduTitleMenuItem Header="_View">

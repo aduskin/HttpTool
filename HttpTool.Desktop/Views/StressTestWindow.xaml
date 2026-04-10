@@ -1,0 +1,431 @@
+<AduSkin:AduWindow
+    x:Class="HttpTool.Desktop.Views.StressTestWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AduAttach="clr-namespace:AduSkin.AdditionalAttributes;assembly=AduSkin"
+    xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
+    xmlns:ctrl="clr-namespace:HttpTool.Desktop.Controls"
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
+    Title="{Binding Project.Name, StringFormat='Stress Test - {0}'}"
+    Width="1100"
+    Height="700"
+    MinWidth="900"
+    MinHeight="500"
+    AduAttach:HeaderAttach.Background="{DynamicResource NormalTransparentBrush}"
+    AduAttach:HeaderAttach.FontSize="14"
+    AduAttach:HeaderAttach.Foreground="{DynamicResource NormalForeground}"
+    AduAttach:HeaderAttach.Height="40"
+    WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <!--  左侧：项目树  -->
+            <ColumnDefinition
+                Width="220"
+                MinWidth="180"
+                MaxWidth="300" />
+            <ColumnDefinition Width="Auto" />
+            <!--  右侧：压测控制  -->
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  左侧：项目树  -->
+        <Border
+            Grid.Column="0"
+            Background="{DynamicResource NormalBackground}"
+            BorderBrush="{DynamicResource NormalBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="6">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="12,10"
+                    FontWeight="SemiBold"
+                    Text="Select API" />
+
+                <AduSkin:AduListBox
+                    Grid.Row="1"
+                    Padding="4"
+                    BorderThickness="0"
+                    ItemsSource="{Binding Project.Apis}"
+                    SelectedItem="{Binding ApiRequest, Mode=TwoWay}">
+                    <AduSkin:AduListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource AduListBoxItem}" TargetType="AduSkin:AduListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="2,1" />
+                        </Style>
+                    </AduSkin:AduListBox.ItemContainerStyle>
+                    <AduSkin:AduListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="28">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Margin="4,0,6,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding Method, Converter={StaticResource HttpMethodToColorConverter}}"
+                                    CornerRadius="3">
+                                    <TextBlock
+                                        Margin="4,1"
+                                        FontSize="9"
+                                        Foreground="White"
+                                        Text="{Binding Method}"
+                                        TextAlignment="Center" />
+                                </Border>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Name}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </DataTemplate>
+                    </AduSkin:AduListBox.ItemTemplate>
+                </AduSkin:AduListBox>
+            </Grid>
+        </Border>
+
+        <!--  分割线  -->
+        <AduSkin:AduGridSplitter
+            Grid.Column="1"
+            Width="Auto"
+            Margin="8,0"
+            HorizontalAlignment="Center"
+            ResizeDirection="Columns" />
+
+        <!--  右侧：压测控制  -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <!--  接口信息 + 配置  -->
+                <RowDefinition Height="Auto" />
+                <!--  统计摘要  -->
+                <RowDefinition Height="Auto" />
+                <!--  图表  -->
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <!--  结果表格  -->
+                <RowDefinition
+                    Height="180"
+                    MinHeight="100"
+                    MaxHeight="400" />
+            </Grid.RowDefinitions>
+
+            <!--  接口信息 + 配置  -->
+            <Border
+                Grid.Row="0"
+                Padding="12"
+                Background="{DynamicResource NormalBackground}"
+                BorderBrush="{DynamicResource NormalBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="6">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  当前接口信息  -->
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="0,0,0,10"
+                        Orientation="Horizontal">
+                        <Border
+                            Margin="0,0,8,0"
+                            Padding="6,2"
+                            Background="{Binding ApiRequest.Method, Converter={StaticResource HttpMethodToColorConverter}}"
+                            CornerRadius="3">
+                            <TextBlock
+                                FontSize="11"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="{Binding ApiRequest.Method}" />
+                        </Border>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontFamily="Consolas"
+                            FontSize="12"
+                            Foreground="{DynamicResource NormalForeground}"
+                            Text="{Binding ApiRequest.Url}"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+
+                    <!--  配置项  -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  请求数  -->
+                        <AduSkin:AduFormBox
+                            Grid.Column="0"
+                            Margin="0,0,16,0"
+                            Header="Total:">
+                            <AduSkin:AduIntegerUpDown
+                                Width="90"
+                                Maximum="10000"
+                                Minimum="1"
+                                Value="{Binding Config.TotalRequests, UpdateSourceTrigger=PropertyChanged}" />
+                        </AduSkin:AduFormBox>
+
+                        <!--  间隔  -->
+                        <AduSkin:AduFormBox
+                            Grid.Column="1"
+                            Margin="0,0,16,0"
+                            Header="Interval (ms):">
+                            <AduSkin:AduIntegerUpDown
+                                Width="90"
+                                Maximum="60000"
+                                Minimum="0"
+                                Value="{Binding Config.IntervalMs, UpdateSourceTrigger=PropertyChanged}" />
+                        </AduSkin:AduFormBox>
+
+                        <!--  并发  -->
+                        <AduSkin:AduFormBox
+                            Grid.Column="2"
+                            Margin="0,0,16,0"
+                            Header="Concurrency:">
+                            <AduSkin:AduIntegerUpDown
+                                Width="80"
+                                Maximum="100"
+                                Minimum="1"
+                                Value="{Binding Config.Concurrency, UpdateSourceTrigger=PropertyChanged}" />
+                        </AduSkin:AduFormBox>
+
+                        <!--  状态  -->
+                        <TextBlock
+                            Grid.Column="4"
+                            VerticalAlignment="Center"
+                            FontWeight="SemiBold"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            Text="{Binding StatusText}" />
+
+                        <!--  按钮  -->
+                        <StackPanel Grid.Column="5" Orientation="Horizontal">
+                            <AduSkin:AduButton
+                                Width="75"
+                                Margin="0,0,8,0"
+                                Background="{DynamicResource PrimaryBrush}"
+                                Command="{Binding StartCommand}"
+                                Content="Start"
+                                Foreground="White" />
+                            <AduSkin:AduButton
+                                Width="65"
+                                Margin="0,0,8,0"
+                                Command="{Binding StopCommand}"
+                                Content="Stop" />
+                            <AduSkin:AduButton
+                                Width="65"
+                                Command="{Binding ClearCommand}"
+                                Content="Clear" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!--  统计摘要  -->
+            <Border
+                Grid.Row="1"
+                Margin="0,12,0,0"
+                Padding="12,8"
+                Background="{DynamicResource NormalBackground}"
+                BorderBrush="{DynamicResource NormalBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="10"
+                            Foreground="Gray"
+                            Text="Completed" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            Text="{Binding CompletedCount}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="10"
+                            Foreground="Gray"
+                            Text="Success" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#28a745"
+                            Text="{Binding SuccessCount}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="10"
+                            Foreground="Gray"
+                            Text="Failed" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#dc3545"
+                            Text="{Binding FailCount}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="10"
+                            Foreground="Gray"
+                            Text="Avg (ms)" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            Text="{Binding AvgResponseTime, StringFormat='{}{0:F1}'}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="4" HorizontalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="10"
+                            Foreground="Gray"
+                            Text="Min (ms)" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#28a745"
+                            Text="{Binding MinResponseTime, StringFormat='{}{0:F1}'}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="5" HorizontalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="10"
+                            Foreground="Gray"
+                            Text="Max (ms)" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#dc3545"
+                            Text="{Binding MaxResponseTime, StringFormat='{}{0:F1}'}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="6" HorizontalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="10"
+                            Foreground="Gray"
+                            Text="RPS" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            Text="{Binding CurrentRps, StringFormat='{}{0:F1}'}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!--  图表  -->
+            <ctrl:TrendChart
+                Title="Response Time Trend (ms)"
+                Grid.Row="2"
+                Margin="0,12,0,0"
+                DataPoints="{Binding ChartPoints}"
+                MaxX="{Binding ChartMaxX}"
+                MaxY="{Binding ChartMaxY}"
+                ProgressValue="{Binding ProgressValue}" />
+
+            <AduSkin:AduGridSplitter Grid.Row="3" ResizeDirection="Rows" />
+
+            <AduSkin:AduGroupBox Grid.Row="4" Header="Results">
+                <AduSkin:AduDataGrid
+                    Grid.Row="1"
+                    AduAttach:BorderAttach.CornerRadius="0"
+                    AutoGenerateColumns="False"
+                    BorderThickness="0"
+                    CanUserAddRows="False"
+                    HeadersVisibility="Column"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Results}"
+                    SelectionMode="Single">
+                    <AduSkin:AduDataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="40"
+                            Binding="{Binding Index}"
+                            CanUserSort="False"
+                            Header="#"
+                            TextBlock.TextAlignment="Center" />
+                        <DataGridTextColumn
+                            Width="80"
+                            Binding="{Binding StatusCode}"
+                            Header="Status">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSuccess}" Value="True">
+                                            <Setter Property="Foreground" Value="#28a745" />
+                                            <Setter Property="FontWeight" Value="SemiBold" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsSuccess}" Value="False">
+                                            <Setter Property="Foreground" Value="#dc3545" />
+                                            <Setter Property="FontWeight" Value="SemiBold" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding ResponseTimeMs, StringFormat='{}{0:F2} ms'}"
+                            Header="Response Time" />
+                        <DataGridTextColumn
+                            Width="150"
+                            Binding="{Binding Timestamp, StringFormat='{}{0:HH:mm:ss.fff}'}"
+                            Header="Timestamp" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding ErrorMessage}"
+                            Header="Error">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="#dc3545" />
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </AduSkin:AduDataGrid.Columns>
+                </AduSkin:AduDataGrid>
+            </AduSkin:AduGroupBox>
+        </Grid>
+    </Grid>
+</AduSkin:AduWindow>
