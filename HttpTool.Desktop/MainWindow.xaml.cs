@@ -83,7 +83,6 @@ public partial class MainWindow : AduWindow
 
                 var tab = new ProjectTabItem
                 {
-                    Title = project.Name,
                     Project = project,
                     Apis = new ObservableCollection<ApiRequest>(project.Apis)
                 };

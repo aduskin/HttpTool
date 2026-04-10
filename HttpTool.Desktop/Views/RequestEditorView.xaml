@@ -7,10 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:HttpTool.Desktop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
-    d:DesignHeight="600"
-    d:DesignWidth="800"
-    mc:Ignorable="d">
+    xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -34,7 +31,7 @@
                         VerticalAlignment="Center"
                         FontSize="14"
                         Foreground="{DynamicResource PrimaryBrush}"
-                        Text="{Binding Title}" />
+                        Text="{Binding Project.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </AduSkin:AduFormBox>
 
                 <!--  Request Name  -->

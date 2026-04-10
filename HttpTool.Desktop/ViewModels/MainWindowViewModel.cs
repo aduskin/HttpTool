@@ -15,19 +15,16 @@ namespace HttpTool.Desktop.ViewModels;
 public partial class ProjectTabItem : ObservableObject
 {
     [ObservableProperty]
-    private string _title = "New Project";
+    private Project? _project;
 
     [ObservableProperty]
-    private Project? _project;
+    private RequestEditorViewModel? _editorViewModel;
 
     [ObservableProperty]
     private ObservableCollection<ApiRequest> _apis = new();
 
     [ObservableProperty]
     private ApiRequest? _selectedApi;
-
-    [ObservableProperty]
-    private RequestEditorViewModel? _editorViewModel;
 
     public string ProjectId => Project?.Id ?? string.Empty;
 }
@@ -164,7 +161,6 @@ public partial class MainWindowViewModel : ObservableObject
         var editorViewModel = _editorViewModelFactory.Create(project);
         return new ProjectTabItem
         {
-            Title = project.Name,
             Project = project,
             Apis = editorViewModel.Apis,
             SelectedApi = editorViewModel.SelectedApi,
@@ -210,7 +206,6 @@ public partial class MainWindowViewModel : ObservableObject
         }
 
         SelectedTab.Project.Apis = SelectedTab.Apis.ToList();
-        SelectedTab.Project.Name = SelectedTab.Title;
         await _projectService.SaveProjectAsync(SelectedTab.Project);
     }
 
@@ -229,10 +224,8 @@ public partial class MainWindowViewModel : ObservableObject
 
         if (dialog.ShowDialog() == true)
         {
-            SelectedTab.Project.Name = SelectedTab.Title;
             SelectedTab.Project.Apis = SelectedTab.Apis.ToList();
             await _projectService.SaveProjectAsAsync(dialog.FileName);
-            SelectedTab.Title = SelectedTab.Project.Name;
 
             // 添加到最近项目
             await _storageService.AddToRecentProjectsAsync(dialog.FileName);

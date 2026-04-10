@@ -160,7 +160,7 @@
                         <AduSkin:AduTreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Apis}">
                                 <StackPanel Height="30" Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding EditorViewModel.Project.Name}" />
                                 </StackPanel>
                                 <HierarchicalDataTemplate.ItemTemplate>
                                     <DataTemplate>
@@ -213,7 +213,7 @@
                         <AduSkin:AduTabControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding EditorViewModel.Project.Name}" />
                                     <AduSkin:AduPathIconButton
                                         Margin="8,0,0,0"
                                         Padding="4,0"

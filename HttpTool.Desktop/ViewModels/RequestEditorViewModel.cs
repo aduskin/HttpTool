@@ -14,10 +14,9 @@ public partial class RequestEditorViewModel : ObservableObject
     private readonly IHttpRequestService _httpRequestService;
     private readonly IFormatterService _formatterService;
     private readonly IHistoryService _historyService;
-    private readonly Project? _project;
 
     [ObservableProperty]
-    private string _title = "New Project";
+    private Project _project;
 
     [ObservableProperty]
     private ObservableCollection<ApiRequest> _apis = new();
@@ -37,8 +36,6 @@ public partial class RequestEditorViewModel : ObservableObject
     [ObservableProperty]
     private bool _isLoading;
 
-    public string ProjectId => _project?.Id ?? string.Empty;
-
     public RequestEditorViewModel(
         IHttpRequestService httpRequestService,
         IFormatterService formatterService,
@@ -55,8 +52,7 @@ public partial class RequestEditorViewModel : ObservableObject
         IHistoryService historyService,
         Project project) : this(httpRequestService, formatterService, historyService)
     {
-        _project = project;
-        Title = project.Name;
+        Project = project;
         Apis = new ObservableCollection<ApiRequest>(project.Apis);
         if (Apis.Count > 0)
         {
@@ -96,7 +92,7 @@ public partial class RequestEditorViewModel : ObservableObject
 
         try
         {
-            var variables = _project?.Environment?.Variables
+            var variables = Project?.Environment?.Variables
                 .Where(v => v.IsEnabled)
                 .ToDictionary(v => v.Key, v => v.Value);
 
@@ -110,7 +106,6 @@ public partial class RequestEditorViewModel : ObservableObject
             // 添加到历史
             await _historyService.AddHistoryAsync(new RequestHistory
             {
-                ProjectId = _project?.Id ?? string.Empty,
                 ApiName = api.Name,
                 Method = api.Method,
                 Url = api.Url,
