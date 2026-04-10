@@ -36,6 +36,12 @@ public partial class RequestEditorViewModel : ObservableObject
     [ObservableProperty]
     private bool _isLoading;
 
+    [ObservableProperty]
+    private string _progressState = "Normal";
+
+    [ObservableProperty]
+    private double _currentProgress;
+
     public RequestEditorViewModel(
         IHttpRequestService httpRequestService,
         IFormatterService formatterService,
@@ -89,6 +95,8 @@ public partial class RequestEditorViewModel : ObservableObject
 
         IsLoading = true;
         CurrentResponse = null;
+        ProgressState = "Wait";  // 开始请求时显示等待状态
+        CurrentProgress = 0;
 
         try
         {
@@ -102,6 +110,10 @@ public partial class RequestEditorViewModel : ObservableObject
             response.Body = _formatterService.Format(response.Body, response.ContentType);
 
             CurrentResponse = response;
+
+            // 根据响应结果设置进度条状态
+            ProgressState = response.IsSuccess ? "Success" : "Error";
+            CurrentProgress = 100;
 
             // 添加到历史
             await _historyService.AddHistoryAsync(new RequestHistory

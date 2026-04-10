@@ -130,7 +130,7 @@
                     <RowDefinition
                         Height="Auto"
                         MinHeight="250"
-                        MaxHeight="500" />
+                        MaxHeight="400" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
@@ -496,7 +496,7 @@
                     <!--  Response Header  -->
                     <Border
                         Grid.Row="0"
-                        Padding="12,8"
+                        Padding="12,6,12,8"
                         BorderBrush="{DynamicResource NormalBorderBrush}"
                         BorderThickness="0,0,0,1">
                         <Grid>
@@ -555,6 +555,7 @@
                                 AduAttach:HeaderAttach.Visible="Collapsed"
                                 Maximum="100"
                                 Minimum="0"
+                                State="{Binding ProgressState}"
                                 Value="{Binding CurrentProgress}" />
                         </Grid>
                     </Border>
