@@ -132,7 +132,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition
                         Height="Auto"
-                        MinHeight="100"
+                        MinHeight="250"
                         MaxHeight="500" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -508,6 +508,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="100" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
@@ -550,6 +551,14 @@
                                 TextTrimming="CharacterEllipsis"
                                 ToolTip="{Binding CurrentResponse.ErrorMessage}"
                                 Visibility="{Binding CurrentResponse.ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}" />
+
+                            <AduSkin:AduProgressBar
+                                Grid.Column="4"
+                                VerticalAlignment="Center"
+                                AduAttach:HeaderAttach.Visible="Collapsed"
+                                Maximum="100"
+                                Minimum="0"
+                                Value="{Binding CurrentProgress}" />
                         </Grid>
                     </Border>
 
