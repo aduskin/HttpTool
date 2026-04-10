@@ -18,6 +18,68 @@ public class TrendChart : Control
     }
 
     /// <summary>
+    /// 圆角
+    /// </summary>
+    public static readonly DependencyProperty CornerRadiusProperty =
+        DependencyProperty.Register(nameof(CornerRadius), typeof(double), typeof(TrendChart),
+            new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public double CornerRadius
+    {
+        get => (double)GetValue(CornerRadiusProperty);
+        set => SetValue(CornerRadiusProperty, value);
+    }
+
+    /// <summary>
+    /// 图表区域背景色（独立于控件背景）
+    /// </summary>
+    public static readonly DependencyProperty ChartBackgroundProperty =
+        DependencyProperty.Register(nameof(ChartBackground), typeof(Brush), typeof(TrendChart),
+            new FrameworkPropertyMetadata(new SolidColorBrush(Color.FromRgb(0x1a, 0x1a, 0x2e)), FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public Brush ChartBackground
+    {
+        get => (Brush)GetValue(ChartBackgroundProperty);
+        set => SetValue(ChartBackgroundProperty, value);
+    }
+
+    /// <summary>
+    /// 图表区背景色（别名，兼容旧名称）
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public Brush PlotBackground
+    {
+        get => ChartBackground;
+        set => ChartBackground = value;
+    }
+
+    /// <summary>
+    /// 线条颜色
+    /// </summary>
+    public static readonly DependencyProperty LineBrushProperty =
+        DependencyProperty.Register(nameof(LineBrush), typeof(Brush), typeof(TrendChart),
+            new FrameworkPropertyMetadata(new SolidColorBrush(Color.FromRgb(0x00, 0x7b, 0xff)), FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public Brush LineBrush
+    {
+        get => (Brush)GetValue(LineBrushProperty);
+        set => SetValue(LineBrushProperty, value);
+    }
+
+    /// <summary>
+    /// 线条粗细
+    /// </summary>
+    public static readonly DependencyProperty LineThicknessProperty =
+        DependencyProperty.Register(nameof(LineThickness), typeof(double), typeof(TrendChart),
+            new FrameworkPropertyMetadata(1.5, FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public double LineThickness
+    {
+        get => (double)GetValue(LineThicknessProperty);
+        set => SetValue(LineThicknessProperty, value);
+    }
+
+    /// <summary>
     /// 图表标题
     /// </summary>
     public static readonly DependencyProperty TitleProperty =
@@ -70,6 +132,15 @@ public class TrendChart : Control
     }
 
     /// <summary>
+    /// 数据点
+    /// </summary>
+    public class PointData
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+    }
+
+    /// <summary>
     /// 图表数据点
     /// </summary>
     public static readonly DependencyProperty DataPointsProperty =
@@ -80,15 +151,6 @@ public class TrendChart : Control
     {
         get => (IEnumerable<PointData>?)GetValue(DataPointsProperty);
         set => SetValue(DataPointsProperty, value);
-    }
-
-    /// <summary>
-    /// 数据点
-    /// </summary>
-    public class PointData
-    {
-        public double X { get; set; }
-        public double Y { get; set; }
     }
 
     public TrendChart()
@@ -107,16 +169,58 @@ public class TrendChart : Control
         if (width <= 0 || height <= 0)
             return;
 
+        // 使用基类的 Margin, Background, BorderBrush, BorderThickness
+        var margin = Margin;
+        var bg = Background ?? new SolidColorBrush(Colors.Transparent);
+        var borderBrush = BorderBrush ?? Brushes.Transparent;
+        var borderThickness = BorderThickness;
+        var hasBorder = borderThickness.Left > 0 || borderThickness.Top > 0 || borderThickness.Right > 0 || borderThickness.Bottom > 0;
+
+        var contentLeft = margin.Left;
+        var contentTop = margin.Top;
+        var contentWidth = width - margin.Left - margin.Right;
+        var contentHeight = height - margin.Top - margin.Bottom;
+
+        if (contentWidth <= 0 || contentHeight <= 0)
+            return;
+
         var chartPadding = 45.0;
         var titleHeight = 30.0;
-        var chartTop = titleHeight;
-        var chartHeight = height - chartPadding - 20; // 20 for progress bar
-        var chartWidth = width - chartPadding - 12;
-        var chartLeft = chartPadding;
+        var chartTop = contentTop + titleHeight;
+        var chartHeight = contentHeight - chartPadding - 20;
+        var chartWidth = contentWidth - chartPadding - 12;
+        var chartLeft = contentLeft + chartPadding;
 
-        // 背景
-        dc.DrawRectangle(new SolidColorBrush(Color.FromRgb(0x1a, 0x1a, 0x2e)), null,
-            new Rect(0, 0, width, height));
+        // 绘制背景和边框
+        var rect = new Rect(contentLeft, contentTop, contentWidth, contentHeight);
+        var radius = CornerRadius;
+
+        if (hasBorder)
+        {
+            var pen = new Pen(borderBrush, 1);
+            pen.Freeze();
+            if (radius > 0)
+                dc.DrawRoundedRectangle(bg, pen, rect, radius, radius);
+            else
+                dc.DrawRectangle(bg, pen, rect);
+        }
+        else if (bg != null && bg != Brushes.Transparent)
+        {
+            if (radius > 0)
+                dc.DrawRoundedRectangle(bg, null, rect, radius, radius);
+            else
+                dc.DrawRectangle(bg, null, rect);
+        }
+
+        // 裁剪图表区域
+        if (radius > 0)
+            dc.PushClip(new RectangleGeometry(rect, radius, radius));
+        else
+            dc.PushClip(new RectangleGeometry(rect));
+
+        // 图表区域背景
+        dc.DrawRectangle(ChartBackground, null,
+            new Rect(chartLeft, chartTop, chartWidth, chartHeight));
 
         // 标题
         var titleBrush = new SolidColorBrush(Colors.White);
@@ -129,12 +233,11 @@ public class TrendChart : Control
             12,
             titleBrush,
             VisualTreeHelper.GetDpi(this).PixelsPerDip),
-            new Point(12, 8));
+            new Point(contentLeft + 12, contentTop + 8));
 
         // 绘制网格线
         var gridBrush = new SolidColorBrush(Color.FromArgb(40, 255, 255, 255));
-        var gridPen = new Pen(gridBrush, 1);
-        gridPen.DashStyle = DashStyles.Dash;
+        var gridPen = new Pen(gridBrush, 1) { DashStyle = DashStyles.Dash };
 
         for (var i = 1; i <= 4; i++)
         {
@@ -158,17 +261,16 @@ public class TrendChart : Control
                 9,
                 labelBrush,
                 VisualTreeHelper.GetDpi(this).PixelsPerDip),
-                new Point(0, y - 6));
+                new Point(contentLeft, y - 6));
         }
 
         // 绘制数据线
         var points = DataPoints?.ToList();
-        if (points != null && points.Count > 0)
+        if (points != null && points.Count > 1)
         {
             var maxY = MaxY;
             var maxX = Math.Max(MaxX, 1);
 
-            // 采样
             var visiblePoints = points.Count > MaxVisiblePoints
                 ? points.Skip(points.Count - MaxVisiblePoints).ToList()
                 : points;
@@ -194,24 +296,25 @@ public class TrendChart : Control
                 }
 
                 geometry.Freeze();
-                var linePen = new Pen(new SolidColorBrush(Color.FromRgb(0x00, 0x7b, 0xff)), 1.5);
+                var linePen = new Pen(LineBrush, LineThickness);
                 linePen.Freeze();
                 dc.DrawGeometry(null, linePen, geometry);
             }
         }
 
-        // 进度条背景
-        var progressBottom = height - 8;
+        // 进度条
+        var progressBottom = contentTop + contentHeight - 8;
         var progressHeight = 4.0;
         dc.DrawRectangle(new SolidColorBrush(Color.FromArgb(60, 255, 255, 255)), null,
-            new Rect(12, progressBottom - progressHeight, width - 24, progressHeight));
+            new Rect(contentLeft + 12, progressBottom - progressHeight, contentWidth - 24, progressHeight));
 
-        // 进度条前景
         if (ProgressValue > 0)
         {
-            var progressBrush = new SolidColorBrush(Color.FromRgb(0x00, 0x7b, 0xff));
-            dc.DrawRectangle(progressBrush, null,
-                new Rect(12, progressBottom - progressHeight, (width - 24) * (ProgressValue / 100.0), progressHeight));
+            dc.DrawRectangle(LineBrush, null,
+                new Rect(contentLeft + 12, progressBottom - progressHeight,
+                    (contentWidth - 24) * (ProgressValue / 100.0), progressHeight));
         }
+
+        dc.Pop();
     }
 }
