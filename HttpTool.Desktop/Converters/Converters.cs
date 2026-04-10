@@ -175,3 +175,39 @@ public class EnumToVisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+public class HttpMethodToColorConverter : IValueConverter
+{
+    private static readonly SolidColorBrush GetBrush = new(Color.FromRgb(0x28, 0xa7, 0x45));      // Green
+    private static readonly SolidColorBrush PostBrush = new(Color.FromRgb(0x00, 0x7b, 0xff));    // Blue
+    private static readonly SolidColorBrush PutBrush = new(Color.FromRgb(0xfd, 0x7e, 0x14));     // Orange
+    private static readonly SolidColorBrush DeleteBrush = new(Color.FromRgb(0xdc, 0x35, 0x45)); // Red
+    private static readonly SolidColorBrush PatchBrush = new(Color.FromRgb(0x6f, 0x42, 0xc1));   // Purple
+    private static readonly SolidColorBrush HeadBrush = new(Color.FromRgb(0x6c, 0x75, 0x7d));   // Gray
+    private static readonly SolidColorBrush OptionsBrush = new(Color.FromRgb(0x20, 0xc9, 0x97)); // Teal
+    private static readonly SolidColorBrush DefaultBrush = new(Color.FromRgb(0x6c, 0x75, 0x7d)); // Gray
+
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is HttpTool.Core.Enums.HttpMethodType method)
+        {
+            return method switch
+            {
+                HttpTool.Core.Enums.HttpMethodType.GET => GetBrush,
+                HttpTool.Core.Enums.HttpMethodType.POST => PostBrush,
+                HttpTool.Core.Enums.HttpMethodType.PUT => PutBrush,
+                HttpTool.Core.Enums.HttpMethodType.DELETE => DeleteBrush,
+                HttpTool.Core.Enums.HttpMethodType.PATCH => PatchBrush,
+                HttpTool.Core.Enums.HttpMethodType.HEAD => HeadBrush,
+                HttpTool.Core.Enums.HttpMethodType.OPTIONS => OptionsBrush,
+                _ => DefaultBrush
+            };
+        }
+        return DefaultBrush;
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}

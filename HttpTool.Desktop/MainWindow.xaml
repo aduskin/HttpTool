@@ -172,7 +172,7 @@
                                             <Border
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Background="{DynamicResource PrimaryBrush}"
+                                                Background="{Binding Method, Converter={StaticResource HttpMethodToColorConverter}}"
                                                 CornerRadius="3">
                                                 <TextBlock
                                                     Margin="4,2"

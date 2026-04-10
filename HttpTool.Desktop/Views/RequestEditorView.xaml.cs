@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using HttpTool.Core.Enums;
-using HttpTool.Core.Models;
 using HttpTool.Desktop.ViewModels;
 using Microsoft.Win32;
 

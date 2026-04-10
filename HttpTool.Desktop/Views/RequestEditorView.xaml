@@ -86,7 +86,7 @@
                                 Margin="6,0,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Background="{DynamicResource PrimaryBrush}"
+                                Background="{Binding Method, Converter={StaticResource HttpMethodToColorConverter}}"
                                 CornerRadius="3">
                                 <TextBlock
                                     Margin="4,2"
@@ -155,7 +155,7 @@
                         <!--  Method Selector  -->
                         <AduSkin:AduComboBox
                             Grid.Column="0"
-                            Width="Auto"
+                            Width="86"
                             Margin="0,0,8,0"
                             ItemsSource="{Binding Source={x:Static local:HttpMethods.Values}}"
                             SelectedItem="{Binding SelectedApi.Method}" />
@@ -207,7 +207,7 @@
                             </Grid.RowDefinitions>
                             <StackPanel
                                 Grid.Row="0"
-                                Margin="8,8,8,4"
+                                Margin="8"
                                 Orientation="Horizontal">
                                 <AduSkin:AduButton Click="AddParam_Click" Content="Add" />
                                 <AduSkin:AduButton
@@ -219,7 +219,7 @@
                                 Grid.Row="1"
                                 AduAttach:BorderAttach.CornerRadius="0"
                                 AutoGenerateColumns="False"
-                                BorderThickness="0"
+                                BorderThickness="0,1,0,0"
                                 CanUserAddRows="False"
                                 HeadersVisibility="Column"
                                 ItemsSource="{Binding SelectedApi.QueryParams}"
@@ -256,7 +256,7 @@
                             </Grid.RowDefinitions>
                             <StackPanel
                                 Grid.Row="0"
-                                Margin="8,8,8,4"
+                                Margin="8"
                                 Orientation="Horizontal">
                                 <AduSkin:AduButton Click="AddHeader_Click" Content="Add" />
                                 <AduSkin:AduButton
@@ -268,7 +268,7 @@
                                 Grid.Row="1"
                                 AduAttach:BorderAttach.CornerRadius="0"
                                 AutoGenerateColumns="False"
-                                BorderThickness="0"
+                                BorderThickness="0,1,0,0"
                                 CanUserAddRows="False"
                                 HeadersVisibility="Column"
                                 ItemsSource="{Binding SelectedApi.Headers}"
