@@ -108,7 +108,7 @@
                                 VerticalAlignment="Center"
                                 AduAttach:PathDataAttach.PathData="{DynamicResource Icon_SystemClose}"
                                 AduAttach:PathDataAttach.Width="8"
-                                Command="{Binding DeleteApiCommand}"
+                                Command="{Binding DataContext.DeleteApiCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 CommandParameter="{Binding}"
                                 Visibility="Collapsed" />
                         </Grid>
