@@ -206,11 +206,15 @@
                                 Grid.Row="0"
                                 Margin="8"
                                 Orientation="Horizontal">
-                                <AduSkin:AduButton Command="{Binding AddParamCommand}" Content="Add" />
-                                <AduSkin:AduButton
+                                <AduSkin:AduPathIconButton
+                                    AduAttach:PathDataAttach.PathData="{DynamicResource Icon_Add}"
+                                    Command="{Binding AddParamCommand}"
+                                    Content="" />
+                                <AduSkin:AduPathIconButton
                                     Margin="8,0,0,0"
+                                    AduAttach:PathDataAttach.PathData="{DynamicResource Icon_Delete}"
                                     Command="{Binding DeleteParamCommand}"
-                                    Content="Delete" />
+                                    Content="" />
                             </StackPanel>
                             <AduSkin:AduDataGrid
                                 Grid.Row="1"
@@ -255,11 +259,15 @@
                                 Grid.Row="0"
                                 Margin="8"
                                 Orientation="Horizontal">
-                                <AduSkin:AduButton Command="{Binding AddHeaderCommand}" Content="Add" />
-                                <AduSkin:AduButton
+                                <AduSkin:AduPathIconButton
+                                    AduAttach:PathDataAttach.PathData="{DynamicResource Icon_Add}"
+                                    Command="{Binding AddHeaderCommand}"
+                                    Content="" />
+                                <AduSkin:AduPathIconButton
                                     Margin="8,0,0,0"
+                                    AduAttach:PathDataAttach.PathData="{DynamicResource Icon_Delete}"
                                     Command="{Binding DeleteHeaderCommand}"
-                                    Content="Delete" />
+                                    Content=" " />
                             </StackPanel>
                             <AduSkin:AduDataGrid
                                 Grid.Row="1"

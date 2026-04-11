@@ -9,7 +9,7 @@
     Title="{Binding Project.Name, StringFormat='Stress Test - {0}'}"
     Width="1100"
     Height="700"
-    MinWidth="900"
+    MinWidth="1100"
     MinHeight="500"
     AduAttach:HeaderAttach.Background="{DynamicResource NormalTransparentBrush}"
     AduAttach:HeaderAttach.FontSize="14"
@@ -238,7 +238,7 @@
             <!--  统计摘要  -->
             <Border
                 Grid.Row="1"
-                Margin="0,12,0,0"
+                Margin="0,8,0,0"
                 Padding="12,8"
                 Background="{DynamicResource NormalBackground}"
                 BorderBrush="{DynamicResource NormalBorderBrush}"
@@ -356,76 +356,85 @@
             </Border>
 
             <!--  图表  -->
-            <ctrl:TrendChart
-                Title="Response Time Trend (ms)"
+            <Border
                 Grid.Row="2"
-                Margin="0,12,0,0"
-                DataPoints="{Binding ChartPoints}"
-                MaxX="{Binding ChartMaxX}"
-                MaxY="{Binding ChartMaxY}"
-                ProgressValue="{Binding ProgressValue}" />
+                Margin="0,8"
+                Padding="10"
+                BorderBrush="{DynamicResource NormalBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+                <ctrl:TrendChart
+                    Title="Response Time Trend (ms)"
+                    DataPoints="{Binding ChartPoints}"
+                    MaxX="{Binding ChartMaxX}"
+                    MaxY="{Binding ChartMaxY}"
+                    ProgressValue="{Binding ProgressValue}" />
+            </Border>
 
             <AduSkin:AduGridSplitter Grid.Row="3" ResizeDirection="Rows" />
 
-            <AduSkin:AduGroupBox Grid.Row="4" Header="Results">
-                <AduSkin:AduDataGrid
-                    Grid.Row="1"
-                    AduAttach:BorderAttach.CornerRadius="0"
-                    AutoGenerateColumns="False"
-                    BorderThickness="0"
-                    CanUserAddRows="False"
-                    HeadersVisibility="Column"
-                    IsReadOnly="True"
-                    ItemsSource="{Binding Results}"
-                    SelectionMode="Single">
-                    <AduSkin:AduDataGrid.Columns>
-                        <DataGridTextColumn
-                            Width="40"
-                            Binding="{Binding Index}"
-                            CanUserSort="False"
-                            Header="#"
-                            TextBlock.TextAlignment="Center" />
-                        <DataGridTextColumn
-                            Width="80"
-                            Binding="{Binding StatusCode}"
-                            Header="Status">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsSuccess}" Value="True">
-                                            <Setter Property="Foreground" Value="#28a745" />
-                                            <Setter Property="FontWeight" Value="SemiBold" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsSuccess}" Value="False">
-                                            <Setter Property="Foreground" Value="#dc3545" />
-                                            <Setter Property="FontWeight" Value="SemiBold" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn
-                            Width="100"
-                            Binding="{Binding ResponseTimeMs, StringFormat='{}{0:F2} ms'}"
-                            Header="Response Time" />
-                        <DataGridTextColumn
-                            Width="150"
-                            Binding="{Binding Timestamp, StringFormat='{}{0:HH:mm:ss.fff}'}"
-                            Header="Timestamp" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding ErrorMessage}"
-                            Header="Error">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="#dc3545" />
-                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                    </AduSkin:AduDataGrid.Columns>
-                </AduSkin:AduDataGrid>
-            </AduSkin:AduGroupBox>
+            <AduSkin:AduDataGrid
+                Grid.Row="4"
+                Margin="0,6,0,0"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                HeadersVisibility="Column"
+                IsReadOnly="True"
+                ItemsSource="{Binding Results}"
+                SelectionMode="Single">
+                <AduSkin:AduDataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="40"
+                        Binding="{Binding Index}"
+                        CanUserSort="False"
+                        ElementStyle="{DynamicResource ReadOnlyTextColumnHorizontalCenter}"
+                        Header="#"
+                        TextBlock.TextAlignment="Center" />
+                    <DataGridTextColumn
+                        Width="60"
+                        Binding="{Binding StatusCode}"
+                        Header="Status">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment" Value="Center" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsSuccess}" Value="True">
+                                        <Setter Property="Foreground" Value="#28a745" />
+                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsSuccess}" Value="False">
+                                        <Setter Property="Foreground" Value="#dc3545" />
+                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn
+                        Width="110"
+                        Binding="{Binding ResponseTimeMs, StringFormat='{}{0:F2} ms'}"
+                        ElementStyle="{DynamicResource ReadOnlyTextColumnHorizontalCenter}"
+                        Header="Response Time" />
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding Timestamp, StringFormat='{}{0:HH:mm:ss.fff}'}"
+                        ElementStyle="{DynamicResource ReadOnlyTextColumnHorizontalCenter}"
+                        Header="Timestamp" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding ErrorMessage}"
+                        Header="Error"
+                        HeaderStyle="{DynamicResource ColumnHeaderLeft}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="4,0" />
+                                <Setter Property="Foreground" Value="#dc3545" />
+                                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </AduSkin:AduDataGrid.Columns>
+            </AduSkin:AduDataGrid>
         </Grid>
     </Grid>
 </AduSkin:AduWindow>
