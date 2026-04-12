@@ -1,10 +1,11 @@
+using AduSkin.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HttpTool.Core.Interfaces;
 using HttpTool.Core.Models;
-using HttpTool.Desktop.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace HttpTool.Desktop.ViewModels;
@@ -79,21 +80,14 @@ public partial class StressTestViewModel : ObservableObject
     public ObservableCollection<StressTestResult> Results { get; } = new();
 
     /// <summary>
+    /// 图表数据系列
+    /// </summary>
+    public ObservableCollection<AduTrendSeries> ChartSeries { get; } = new();
+
+    /// <summary>
     /// 图表数据点
     /// </summary>
-    public ObservableCollection<TrendChart.PointData> ChartPoints { get; } = new();
-
-    /// <summary>
-    /// 图表 X 轴最大值
-    /// </summary>
-    [ObservableProperty]
-    private double _chartMaxX = 100;
-
-    /// <summary>
-    /// 图表 Y 轴最大值
-    /// </summary>
-    [ObservableProperty]
-    private double _chartMaxY = 1000;
+    private ObservableCollection<Point> _responseTimePoints = new();
 
     public StressTestViewModel(
         ApiRequest apiRequest,
@@ -107,6 +101,19 @@ public partial class StressTestViewModel : ObservableObject
         _httpRequestService = httpRequestService;
         _dispatcher = Application.Current.Dispatcher;
         Apis = new ObservableCollection<ApiRequest>(project.Apis);
+
+        // 初始化趋势图数据系列
+        var trendSeries = new AduTrendSeries
+        {
+            Name = "Response Time (ms)",
+            Stroke = new SolidColorBrush(Color.FromRgb(0x00, 0x7b, 0xff)),
+            Fill = new SolidColorBrush(Color.FromRgb(0x00, 0x7b, 0xff)),
+            StrokeThickness = 1.5,
+            FillOpacity = 0.2,
+            ShowPoints = false,
+            DataPoints = _responseTimePoints
+        };
+        ChartSeries.Add(trendSeries);
     }
 
     [RelayCommand(CanExecute = nameof(CanStart))]
@@ -127,7 +134,7 @@ public partial class StressTestViewModel : ObservableObject
         StatusText = "Running...";
 
         Results.Clear();
-        ChartPoints.Clear();
+        _responseTimePoints.Clear();
 
         try
         {
@@ -212,14 +219,7 @@ public partial class StressTestViewModel : ObservableObject
                             Results.Add(result);
 
                             // 添加到图表
-                            ChartPoints.Add(new TrendChart.PointData { X = index, Y = responseTime });
-
-                            // 动态调整图表 Y 轴
-                            if (responseTime > ChartMaxY * 0.8)
-                            {
-                                ChartMaxY = responseTime * 1.2;
-                            }
-                            ChartMaxX = Math.Max(100, total);
+                            _responseTimePoints.Add(new Point(index, responseTime));
 
                             // 更新统计
                             CompletedCount = completed;
@@ -293,7 +293,7 @@ public partial class StressTestViewModel : ObservableObject
     private void Clear()
     {
         Results.Clear();
-        ChartPoints.Clear();
+        _responseTimePoints.Clear();
         CompletedCount = 0;
         SuccessCount = 0;
         FailCount = 0;
@@ -303,7 +303,5 @@ public partial class StressTestViewModel : ObservableObject
         CurrentRps = 0;
         ProgressValue = 0;
         StatusText = "Ready";
-        ChartMaxX = 100;
-        ChartMaxY = 1000;
     }
 }

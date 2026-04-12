@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:AduAttach="clr-namespace:AduSkin.AdditionalAttributes;assembly=AduSkin"
     xmlns:AduSkin="clr-namespace:AduSkin.Controls;assembly=AduSkin"
-    xmlns:ctrl="clr-namespace:HttpTool.Desktop.Controls"
     xmlns:vm="clr-namespace:HttpTool.Desktop.ViewModels"
     Title="{Binding Project.Name, StringFormat='Stress Test - {0}'}"
     Width="1100"
@@ -363,12 +362,17 @@
                 BorderBrush="{DynamicResource NormalBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="8">
-                <ctrl:TrendChart
-                    Title="Response Time Trend (ms)"
-                    DataPoints="{Binding ChartPoints}"
-                    MaxX="{Binding ChartMaxX}"
-                    MaxY="{Binding ChartMaxY}"
-                    ProgressValue="{Binding ProgressValue}" />
+                <AduSkin:AduTrendChart
+                    EnableFill="True"
+                    FillOpacity="0.2"
+                    GridBrush="#333"
+                    Header="Response Time Trend (ms)"
+                    PointSize="4"
+                    Series="{Binding ChartSeries, Mode=OneWay}"
+                    ShowAxes="True"
+                    ShowGrid="True"
+                    ShowLegend="True"
+                    ShowPoints="False" />
             </Border>
 
             <AduSkin:AduGridSplitter Grid.Row="3" ResizeDirection="Rows" />
