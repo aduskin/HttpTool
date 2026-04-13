@@ -267,7 +267,7 @@
                                     Margin="8,0,0,0"
                                     AduAttach:PathDataAttach.PathData="{DynamicResource Icon_Delete}"
                                     Command="{Binding DeleteHeaderCommand}"
-                                    Content=" " />
+                                    Content="" />
                             </StackPanel>
                             <AduSkin:AduDataGrid
                                 Grid.Row="1"
@@ -349,8 +349,9 @@
                                 VerticalContentAlignment="Top"
                                 AcceptsReturn="True"
                                 AcceptsTab="True"
-                                HorizontalScrollBarVisibility="Auto"
+                                HorizontalScrollBarVisibility="Disabled"
                                 Text="{Binding SelectedApi.Body, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap"
                                 VerticalScrollBarVisibility="Auto"
                                 Visibility="{Binding SelectedApi.BodyType, Converter={StaticResource BinaryToCollapsedConverter}}" />
 
