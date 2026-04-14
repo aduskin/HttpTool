@@ -10,7 +10,7 @@ public interface IHttpRequestService
     /// <summary>
     /// 发送请求
     /// </summary>
-    Task<ApiResponse> SendRequestAsync(ApiRequest request, Dictionary<string, string>? variables = null);
+    Task<ApiResponse> SendRequestAsync(ApiRequest request, Dictionary<string, string>? variables = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 替换变量

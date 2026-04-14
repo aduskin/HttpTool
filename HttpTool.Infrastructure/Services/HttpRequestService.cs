@@ -19,7 +19,7 @@ public class HttpRequestService : IHttpRequestService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<ApiResponse> SendRequestAsync(ApiRequest request, Dictionary<string, string>? variables = null)
+    public async Task<ApiResponse> SendRequestAsync(ApiRequest request, Dictionary<string, string>? variables = null, CancellationToken cancellationToken = default)
     {
         var response = new ApiResponse();
         var stopwatch = Stopwatch.StartNew();
@@ -90,8 +90,8 @@ public class HttpRequestService : IHttpRequestService
                 }
             }
 
-            // 发送请求
-            var httpResponse = await client.SendAsync(httpRequest);
+            // 发送请求（支持取消）
+            var httpResponse = await client.SendAsync(httpRequest, cancellationToken);
             stopwatch.Stop();
 
             // 构建响应

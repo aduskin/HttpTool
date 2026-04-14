@@ -44,6 +44,7 @@ public partial class StressTestViewModel : ObservableObject
     [ObservableProperty]
     private StressTestConfig _config = new();
 
+    [NotifyCanExecuteChangedFor(nameof(StopCommand))]
     [ObservableProperty]
     private bool _isRunning;
 
@@ -149,7 +150,7 @@ public partial class StressTestViewModel : ObservableObject
                 StatusText = "Warming up...";
                 for (var i = 0; i < warmup && !_cts.Token.IsCancellationRequested; i++)
                 {
-                    await _httpRequestService.SendRequestAsync(ApiRequest, Variables);
+                    await _httpRequestService.SendRequestAsync(ApiRequest, Variables, _cts.Token);
                 }
                 StatusText = "Running...";
             }
@@ -179,7 +180,7 @@ public partial class StressTestViewModel : ObservableObject
                     try
                     {
                         var reqStart = DateTime.Now;
-                        var response = await _httpRequestService.SendRequestAsync(ApiRequest, Variables);
+                        var response = await _httpRequestService.SendRequestAsync(ApiRequest, Variables, _cts!.Token);
                         var responseTime = response.ElapsedMilliseconds;
 
                         Interlocked.Increment(ref completed);
