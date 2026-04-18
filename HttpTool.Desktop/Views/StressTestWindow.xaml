@@ -358,21 +358,18 @@
             <Border
                 Grid.Row="2"
                 Margin="0,8"
-                Padding="10"
+                Padding="30,10,20,10"
                 BorderBrush="{DynamicResource NormalBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="8">
                 <AduSkin:AduTrendChart
+                    AduAttach:ChartAttach.IsDrawingAxes="True"
+                    AduAttach:ChartAttach.IsDrawingGrid="True"
+                    AduAttach:ChartAttach.IsDrawingLegend="True"
+                    AduAttach:HeaderAttach.Header="Response Time Trend (ms)"
                     EnableFill="True"
                     FillOpacity="0.2"
-                    GridBrush="#333"
-                    Header="Response Time Trend (ms)"
-                    PointSize="4"
-                    Series="{Binding ChartSeries, Mode=OneWay}"
-                    ShowAxes="True"
-                    ShowGrid="True"
-                    ShowLegend="True"
-                    ShowPoints="False" />
+                    Series="{Binding ChartSeries, Mode=OneWay}" />
             </Border>
 
             <AduSkin:AduGridSplitter Grid.Row="3" ResizeDirection="Rows" />
