@@ -20,3 +20,4 @@
 /.claude
 /.idea/.idea.HttpTool/.idea
 /bin/BuildTest
+/HttpTool.Core/bin/Release/net10.0
